@@ -1,5 +1,6 @@
 (ns bosslint.main
-  (:require [clojure.java.shell :as shell]
+  (:require [clojure.java.io :as io]
+            [clojure.java.shell :as shell]
             [clojure.string :as string])
   (:gen-class))
 
@@ -46,7 +47,8 @@
 
 (defn cljfmt [files]
   (let [files (select-files files [:clj :cljc :cljs])]
-    (when (or (= files :all) (seq files))
+    (when (and (.exists (io/file "project.clj"))
+               (or (= files :all) (seq files)))
       (newline)
       (println "cljfmt:")
       (check-command "lein")
@@ -70,7 +72,8 @@
 
 (defn eastwood [files]
   (let [files (select-files files [:clj :cljc])]
-    (when (or (= files :all) (seq files))
+    (when (and (.exists (io/file "project.clj"))
+               (or (= files :all) (seq files)))
       (newline)
       (println "eastwood:")
       (check-command "lein")
