@@ -6,6 +6,8 @@
             [clojure.tools.cli :as cli])
   (:gen-class))
 
+(def version "0.1.0-SNAPSHOT")
+
 (def linters
   [::linters/cljfmt
    ::linters/clj-kondo
@@ -39,7 +41,8 @@
       (linters/lint l files))))
 
 (def cli-options
-  [["-h" "--help"]])
+  [["-v" "--version" "Print version"]
+   ["-h" "--help" "Print help"]])
 
 (defn usage [options-summary]
   (->> ["Usage: bosslint [<options>] [<commit>]"
@@ -55,6 +58,9 @@
 (defn validate-args [args]
   (let [{:keys [options arguments errors summary]} (cli/parse-opts args cli-options)]
     (cond
+      (:version options)
+      {:exit-message version :ok? true}
+
       (:help options)
       {:exit-message (usage summary) :ok? true}
 
