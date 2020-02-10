@@ -6,6 +6,12 @@
             [clojure.tools.cli :as cli])
   (:gen-class))
 
+(def linters
+  [::linters/cljfmt
+   ::linters/clj-kondo
+   ::linters/eastwood
+   ::linters/stylelint])
+
 (def excludes
   [#"project.clj$"])
 
@@ -29,10 +35,8 @@
                 (group-by path->type (git-diff ref))
                 :all)]
     (println "Files:" files)
-    (linters/cljfmt files)
-    (linters/clj-kondo files)
-    (linters/eastwood files)
-    (linters/stylelint files)))
+    (doseq [l linters]
+      (linters/lint l files))))
 
 (def cli-options
   [["-h" "--help"]])

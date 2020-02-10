@@ -16,7 +16,10 @@
     :all
     (mapcat #(get files %) types)))
 
-(defn cljfmt [files]
+(defmulti lint (fn [key files] key))
+
+(defmethod lint ::cljfmt
+  [_ files]
   (let [files (select-files files [:clj :cljc :cljs])]
     (when (and (.exists (io/file "project.clj"))
                (or (= files :all) (seq files)))
@@ -29,7 +32,8 @@
         (println (:out ret))
         (println (:err ret))))))
 
-(defn clj-kondo [files]
+(defmethod lint ::clj-kondo
+  [_ files]
   (let [files (select-files files [:clj :cljc :cljs])]
     (when (or (= files :all) (seq files))
       (newline)
@@ -41,7 +45,8 @@
             ret (apply shell/sh "clj-kondo" "--lint" files)]
         (println (:out ret))))))
 
-(defn eastwood [files]
+(defmethod lint ::eastwood
+  [_ files]
   (let [files (select-files files [:clj :cljc])]
     (when (and (.exists (io/file "project.clj"))
                (or (= files :all) (seq files)))
@@ -56,7 +61,8 @@
                                  (format "{:namespaces [%s]}"))))]
         (println (:out ret))))))
 
-(defn stylelint [files]
+(defmethod lint ::stylelint
+  [_ files]
   (let [files (select-files files [:css :sass])]
     (when (or (= files :all) (seq files))
       (newline)
