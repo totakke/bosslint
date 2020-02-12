@@ -16,11 +16,19 @@
    ::linters/stylelint])
 
 (def excludes
-  [#"project.clj$"])
+  [#"project.clj$"
+   #"data_readers.clj$"])
 
 (defn git-diff [ref]
   (util/check-command "git")
   (->> (shell/sh "git" "diff" "--name-only" "--diff-filter=AMRTU" ref)
+       :out
+       string/split-lines
+       (remove (fn [s] (some #(re-find % s) excludes)))))
+
+(defn git-ls-files []
+  (util/check-command "git")
+  (->> (shell/sh "git" "ls-files")
        :out
        string/split-lines
        (remove (fn [s] (some #(re-find % s) excludes)))))
@@ -35,9 +43,9 @@
     :other))
 
 (defn run [ref]
-  (let [files (if ref
-                (group-by path->type (git-diff ref))
-                :all)]
+  (let [files (group-by path->type (if ref
+                                     (git-diff ref)
+                                     (git-ls-files)))]
     (println "Files:" files)
     (doseq [l linters]
       (linters/lint l files))))
