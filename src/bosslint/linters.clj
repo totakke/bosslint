@@ -18,6 +18,18 @@
 
 (defmulti lint (fn [key files] key))
 
+(defmethod lint ::checkstyle
+  [_ files]
+  (let [files (select-files files [:java])]
+    (when (or (= files :all) (seq files))
+      (newline)
+      (println "checkstyle:")
+      (util/check-command "checkstyle")
+      (let [ret (if (= files :all)
+                  (shell/sh "checkstyle" "**/*.java")
+                  (apply shell/sh "checkstyle" "-c" "google_checks.xml" files))]
+        (println (:out ret))))))
+
 (defmethod lint ::cljfmt
   [_ files]
   (let [files (select-files files [:clj :cljc :cljs])]

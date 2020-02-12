@@ -9,7 +9,8 @@
 (def version "0.1.0-SNAPSHOT")
 
 (def linters
-  [::linters/cljfmt
+  [::linters/checkstyle
+   ::linters/cljfmt
    ::linters/clj-kondo
    ::linters/eastwood
    ::linters/stylelint])
@@ -29,6 +30,7 @@
     #"clj$"     :clj
     #"cljc$"    :cljc
     #"cljs$"    :cljs
+    #"java$"    :java
     #"s[ac]ss$" :sass
     :other))
 
