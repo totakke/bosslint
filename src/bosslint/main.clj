@@ -28,10 +28,16 @@
 
 (defn git-ls-files []
   (util/check-command "git")
-  (->> (shell/sh "git" "ls-files")
+  (->> (shell/sh "git" "ls-files" "--full-name")
        :out
        string/split-lines
        (remove (fn [s] (some #(re-find % s) excludes)))))
+
+(defn git-top-dir []
+  (util/check-command "git")
+  (-> (shell/sh "git" "rev-parse" "--show-toplevel")
+      :out
+      string/trim-newline))
 
 (defn path->type [s]
   (condp re-find s
@@ -42,11 +48,18 @@
     #"s[ac]ss$" :sass
     :other))
 
+(defn enum-files [ref]
+  (let [top-dir (git-top-dir)]
+    (->> (if ref
+           (git-diff ref)
+           (git-ls-files))
+         (map (fn [s]
+                {:git-path s
+                 :absolute-path (str top-dir "/" s)}))
+         (group-by (comp path->type :git-path)))))
+
 (defn run [ref]
-  (let [files (group-by path->type (if ref
-                                     (git-diff ref)
-                                     (git-ls-files)))]
-    (println "Files:" files)
+  (let [files (enum-files ref)]
     (doseq [l linters]
       (linters/lint l files))))
 
