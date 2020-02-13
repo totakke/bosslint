@@ -13,6 +13,7 @@
    ::linters/cljfmt
    ::linters/clj-kondo
    ::linters/eastwood
+   ::linters/hadolint
    ::linters/stylelint])
 
 (def excludes
@@ -41,11 +42,12 @@
 
 (defn path->type [s]
   (condp re-find s
-    #"clj$"     :clj
-    #"cljc$"    :cljc
-    #"cljs$"    :cljs
-    #"java$"    :java
-    #"s[ac]ss$" :sass
+    #"\.clj$"                 :clj
+    #"\.cljc$"                :cljc
+    #"\.cljs$"                :cljs
+    #"Dockerfile(\.[-\w]+)?$" :docker
+    #"\.java$"                :java
+    #"\.s[ac]ss$"             :sass
     :other))
 
 (defn enum-files [ref]

@@ -76,6 +76,16 @@
                                (format "{:namespaces [%s]}")))]
         (println (:out ret))))))
 
+(defmethod lint ::hadolint
+  [_ files]
+  (let [files (select-files files [:docker])]
+    (when (seq files)
+      (newline)
+      (println "hadolint:")
+      (print-files files)
+      (let [ret (apply shell/sh "hadolint" (map :absolute-path files))]
+        (println (:out ret))))))
+
 (defmethod lint ::stylelint
   [_ files]
   (let [files (select-files files [:css :sass])]
