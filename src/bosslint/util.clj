@@ -5,7 +5,7 @@
   (try
     (shell/sh command)
     true
-    (catch java.io.IOException e
+    (catch java.io.IOException _
       false)))
 
 (def command-exists? (memoize command-exists?*))

@@ -1,6 +1,5 @@
 (ns bosslint.linters
   (:require [bosslint.util :as util]
-            [clojure.java.io :as io]
             [clojure.java.shell :as shell]
             [clojure.string :as string]))
 
