@@ -1,6 +1,7 @@
 (ns bosslint.main
   (:require [bosslint.linters :as linters]
             [bosslint.util :as util]
+            [clj-sub-command.core :as cmd]
             [clojure.java.shell :as shell]
             [clojure.string :as string]
             [clojure.tools.cli :as cli])
@@ -60,34 +61,39 @@
                  :absolute-path (str top-dir "/" s)}))
          (group-by (comp path->type :git-path)))))
 
-(defn run [ref]
+(defn run-check [ref]
   (let [files (enum-files ref)]
     (doseq [l linters]
       (linters/lint l files))))
-
-(def cli-options
-  [["-v" "--version" "Print version"]
-   ["-h" "--help" "Print help"]])
-
-(defn usage [options-summary]
-  (->> ["Usage: bosslint [<options>] [<commit>]"
-        ""
-        "Options:"
-        options-summary]
-       (string/join \newline)))
 
 (defn error-msg [errors]
   (str "The following errors occurred while parsing your command:\n\n"
        (string/join \newline errors)))
 
-(defn validate-args [args]
-  (let [{:keys [options arguments errors summary]} (cli/parse-opts args cli-options)]
+(defn exit [status msg]
+  (println msg)
+  (System/exit status))
+
+;;; check
+
+(def check-cmd-options
+  [["-h" "--help" "Print help"]])
+
+(defn check-cmd-usage [options-summary]
+  (->> ["Usage: bosslint [--help] [<commit>]"
+        ""
+        "Options:"
+        options-summary]
+       (string/join \newline)))
+
+(defn validate-check-cmd-args [args]
+  (let [{:keys [options arguments errors summary]} (cli/parse-opts args check-cmd-options)]
     (cond
       (:version options)
       {:exit-message version :ok? true}
 
       (:help options)
-      {:exit-message (usage summary) :ok? true}
+      {:exit-message (check-cmd-usage summary) :ok? true}
 
       errors
       {:exit-message (error-msg errors)}
@@ -96,18 +102,67 @@
       {:ref (first arguments) :options options}
 
       :else
-      {:exit-message (usage summary)})))
+      {:exit-message (check-cmd-usage summary)})))
 
-(defn exit [status msg]
-  (println msg)
-  (System/exit status))
+(defn check-cmd [args]
+  (let [{:keys [ref exit-message ok?]} (validate-check-cmd-args args)]
+    (if exit-message
+      (exit (if ok? 0 1) exit-message)
+      (run-check ref))))
+
+;;; linters
+
+(defn linters-cmd [args]
+  (doseq [l linters]
+    (println (name l))))
+
+;;; main
+
+(def options
+  [["-h" "--help" "Print help"]
+   ["-v" "--version" "Print version"]])
+
+(def commands
+  [["check" "Check files"]
+   ["linters" "Show linters"]])
+
+(defn usage [options-summary commands-summary]
+  (->> ["Usage: bosslint [--help] [--version] <command> [<args>]"
+        ""
+        "Options:"
+        options-summary
+        ""
+        "Commands:"
+        commands-summary]
+       (string/join \newline)))
+
+(defn validate-args [args]
+  (let [{:keys [options command arguments errors options-summary commands-summary]}
+        (cmd/parse-cmds args options commands :allow-empty-command true)]
+    (cond
+      (:version options)
+      {:exit-message version, :ok? true}
+
+      (:help options)
+      {:exit-message (usage options-summary commands-summary), :ok? true}
+
+      errors
+      {:exit-message (error-msg errors)}
+
+      command
+      {:command command, :arguments arguments}
+
+      :else
+      {:exit-message (usage options-summary commands-summary)})))
 
 (defn -main [& args]
-  (let [{:keys [ref exit-message ok?]} (validate-args args)]
+  (let [{:keys [command arguments exit-message ok?]} (validate-args args)]
     (if exit-message
       (exit (if ok? 0 1) exit-message)
       (try
-        (run ref)
+        (case command
+          :check   (check-cmd arguments)
+          :linters (linters-cmd arguments))
         (System/exit 0)
         (catch Exception e
           (exit 1 (.getMessage e)))))))

@@ -4,6 +4,7 @@
  :aliases {:native-image
            {:main-opts ["-m clj.native-image bosslint.main"
                         "--initialize-at-build-time"
+                        "--no-fallback"
                         "-H:Name=bosslint"]
             :jvm-opts ["-Dclojure.compiler.direct-linking=true"]
             :extra-deps
