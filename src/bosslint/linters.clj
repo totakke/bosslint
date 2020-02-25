@@ -20,6 +20,15 @@
        (string/join \newline)
        println))
 
+(defn- clojure-project? []
+  (let [{:keys [config-files]} (-> (shell/sh "clojure" "-Sdescribe")
+                                   :out
+                                   edn/read-string)]
+    (some? ((set config-files) "deps.edn"))))
+
+(defn- leiningen-project? []
+  (zero? (:exit (shell/sh "lein" "deps" ":tree"))))
+
 (defmulti lint (fn [key files] key))
 
 (defmethod lint ::checkstyle
@@ -69,8 +78,12 @@
   [_ files]
   (when (seq (select-files files [:clj :cljc :cljs]))
     (when-let [key (cond
-                     (util/command-exists? "clojure") :bosslint.linters.cljfmt/clojure
-                     (util/command-exists? "lein") :bosslint.linters.cljfmt/lein)]
+                     (and (leiningen-project?)
+                          (util/command-exists? "lein"))
+                     :bosslint.linters.cljfmt/lein
+
+                     (util/command-exists? "clojure")
+                     :bosslint.linters.cljfmt/clojure)]
       (lint key files))))
 
 (defmethod lint ::clj-kondo
@@ -117,15 +130,6 @@
                                (string/join " ")
                                (format "{:namespaces [%s]}")))]
         (println (:out ret))))))
-
-(defn- clojure-project? []
-  (let [{:keys [config-files]} (-> (shell/sh "clojure" "-Sdescribe")
-                                   :out
-                                   edn/read-string)]
-    (some? ((set config-files) "deps.edn"))))
-
-(defn- leiningen-project? []
-  (zero? (:exit (shell/sh "lein" "deps" ":tree"))))
 
 (defmethod lint ::eastwood
   [_ files]
