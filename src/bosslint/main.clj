@@ -61,9 +61,13 @@
                  :absolute-path (str top-dir "/" s)}))
          (group-by (comp path->type :git-path)))))
 
-(defn run-check [ref]
-  (let [files (enum-files ref)]
-    (doseq [l linters]
+(defn run-check
+  [ref options]
+  (let [files (enum-files ref)
+        enabled-linter? (if (:linter options)
+                          (set (map #(keyword "bosslint.linters" %) (:linter options)))
+                          (constantly true))]
+    (doseq [l (filter enabled-linter? linters)]
       (linters/lint l files))))
 
 (defn error-msg [errors]
@@ -77,10 +81,13 @@
 ;;; check
 
 (def check-cmd-options
-  [["-h" "--help" "Print help"]])
+  [["-l" "--linter LINTER" "Select linter"
+    :assoc-fn (fn [m k v] (update m k #(conj (or % []) v)))
+    :validate [(set (map name linters))]]
+   ["-h" "--help" "Print help"]])
 
 (defn check-cmd-usage [options-summary]
-  (->> ["Usage: bosslint [--help] [<commit>]"
+  (->> ["Usage: bosslint check [<options>] [<commit>]"
         ""
         "Options:"
         options-summary]
@@ -105,10 +112,10 @@
       {:exit-message (check-cmd-usage summary)})))
 
 (defn check-cmd [args]
-  (let [{:keys [ref exit-message ok?]} (validate-check-cmd-args args)]
+  (let [{:keys [ref options exit-message ok?]} (validate-check-cmd-args args)]
     (if exit-message
       (exit (if ok? 0 1) exit-message)
-      (run-check ref))))
+      (run-check ref options))))
 
 ;;; linters
 
