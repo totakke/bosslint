@@ -21,22 +21,26 @@
   [#"project.clj$"
    #"data_readers.clj$"])
 
+(defn- assert-command [command]
+  (when-not (util/command-exists? command)
+    (throw (ex-info (str "Command not found: " command) {}))))
+
 (defn git-diff [ref]
-  (util/check-command "git")
+  (assert-command "git")
   (->> (shell/sh "git" "diff" "--name-only" "--diff-filter=AMRTU" ref)
        :out
        string/split-lines
        (remove (fn [s] (some #(re-find % s) excludes)))))
 
 (defn git-ls-files []
-  (util/check-command "git")
+  (assert-command "git")
   (->> (shell/sh "git" "ls-files" "--full-name")
        :out
        string/split-lines
        (remove (fn [s] (some #(re-find % s) excludes)))))
 
 (defn git-top-dir []
-  (util/check-command "git")
+  (assert-command "git")
   (-> (shell/sh "git" "rev-parse" "--show-toplevel")
       :out
       string/trim-newline))

@@ -9,7 +9,3 @@
       false)))
 
 (def command-exists? (memoize command-exists?*))
-
-(defn check-command [command]
-  (when-not (command-exists? command)
-    (throw (ex-info (str "Command not found: " command) {}))))

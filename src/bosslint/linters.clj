@@ -2,7 +2,8 @@
   (:require [bosslint.util :as util]
             [clojure.edn :as edn]
             [clojure.java.shell :as shell]
-            [clojure.string :as string]))
+            [clojure.string :as string]
+            [io.aviso.ansi :as ansi]))
 
 (defn- path->ns [s]
   (-> s
@@ -20,6 +21,11 @@
        (string/join \newline)
        println))
 
+(defn- check-command
+  [command]
+  (or (util/command-exists? command)
+      (println (ansi/yellow (str command " not found")))))
+
 (defn- clojure-project? []
   (let [{:keys [config-files]} (-> (shell/sh "clojure" "-Sdescribe")
                                    :out
@@ -36,27 +42,27 @@
   (let [files (select-files files [:java])]
     (when (seq files)
       (newline)
-      (println "checkstyle:")
+      (println (str (ansi/green "checkstyle") ":"))
       (print-files files)
-      (util/check-command "checkstyle")
-      (let [ret (apply shell/sh "checkstyle" "-c" "google_checks.xml"
-                       (map :absolute-path files))]
-        (println (:out ret))))))
+      (when (check-command "checkstyle")
+        (let [ret (apply shell/sh "checkstyle" "-c" "google_checks.xml"
+                         (map :absolute-path files))]
+          (println (:out ret)))))))
 
 (defmethod lint :bosslint.linters.cljfmt/clojure
   [_ files]
   (let [files (select-files files [:clj :cljc :cljs])]
     (when (seq files)
       (newline)
-      (println "cljfmt (clojure):")
+      (println (str (ansi/green "cljfmt") " (clojure):"))
       (print-files files)
-      (util/check-command "clojure")
-      (let [ret (apply shell/sh "clojure"
-                       "-Sdeps" "{:deps {cljfmt {:mvn/version \"0.6.4\"}}}"
-                       "-m" "cljfmt.main" "check"
-                       (map :absolute-path files))]
-        (println (:out ret))
-        (println (:err ret))))))
+      (when (check-command "clojure")
+        (let [ret (apply shell/sh "clojure"
+                         "-Sdeps" "{:deps {cljfmt {:mvn/version \"0.6.4\"}}}"
+                         "-m" "cljfmt.main" "check"
+                         (map :absolute-path files))]
+          (println (:out ret))
+          (println (:err ret)))))))
 
 (defmethod lint :bosslint.linters.cljfmt/lein
   [_ files]
@@ -67,7 +73,7 @@
                (not= (:out (shell/sh "lein" "cljfmt" "-h"))
                      "Task: 'cljfmt' not found"))
       (newline)
-      (println "cljfmt (lein):")
+      (println (str (ansi/green "cljfmt") " (lein):"))
       (print-files files)
       (let [ret (apply shell/sh "lein" "cljfmt" "check"
                        (map :git-path files))]
@@ -91,19 +97,19 @@
   (let [files (select-files files [:clj :cljc :cljs])]
     (when (seq files)
       (newline)
-      (println "clj-kondo:")
+      (println (str (ansi/green "clj-kondo") ":"))
       (print-files files)
-      (util/check-command "clj-kondo")
-      (let [ret (apply shell/sh "clj-kondo" "--lint"
-                       (map :absolute-path files))]
-        (println (:out ret))))))
+      (when (check-command "clj-kondo")
+        (let [ret (apply shell/sh "clj-kondo" "--lint"
+                         (map :absolute-path files))]
+          (println (:out ret)))))))
 
 (defmethod lint :bosslint.linters.eastwood/clojure
   [_ files]
   (let [files (select-files files [:clj :cljc])]
     (when (seq files)
       (newline)
-      (println "eastwood (clojure)")
+      (println (str (ansi/green "eastwood") " (clojure):"))
       (print-files files)
       (let [ret (shell/sh "clojure"
                           "-Sdeps" "{:deps {jonase/eastwood {:mvn/version \"RELEASE\"}}}"
@@ -122,7 +128,7 @@
                (zero? (:exit (shell/sh "lein" "deps" ":tree")))
                (zero? (:exit (shell/sh "lein" "eastwood" "help"))))
       (newline)
-      (println "eastwood (lein):")
+      (println (str (ansi/green "eastwood") " (lein):"))
       (print-files files)
       (let [ret (shell/sh "lein" "eastwood"
                           (->> (map :git-path files)
@@ -149,18 +155,19 @@
   (let [files (select-files files [:docker])]
     (when (seq files)
       (newline)
-      (println "hadolint:")
+      (println (str (ansi/green "hadolint") ":"))
       (print-files files)
-      (let [ret (apply shell/sh "hadolint" (map :absolute-path files))]
-        (println (:out ret))))))
+      (when (check-command "hadolint")
+        (let [ret (apply shell/sh "hadolint" (map :absolute-path files))]
+          (println (:out ret)))))))
 
 (defmethod lint ::stylelint
   [_ files]
   (let [files (select-files files [:css :sass])]
     (when (seq files)
       (newline)
-      (println "stylelint:")
+      (println (str (ansi/green "stylelint") ":"))
       (print-files files)
-      (util/check-command "stylelint")
-      (let [ret (apply shell/sh "stylelint" (map :absolute-path files))]
-        (println (:out ret))))))
+      (when (check-command "stylelint")
+        (let [ret (apply shell/sh "stylelint" (map :absolute-path files))]
+          (println (:out ret)))))))
