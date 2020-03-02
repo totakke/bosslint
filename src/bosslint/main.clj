@@ -1,21 +1,16 @@
 (ns bosslint.main
-  (:require [bosslint.linters :as linters]
+  (:require [bosslint.linter :as linter]
+            (bosslint.linter checkstyle clj-kondo cljfmt eastwood hadolint
+                             stylelint)
             [bosslint.util :as util]
             [clj-sub-command.core :as cmd]
             [clojure.java.shell :as shell]
             [clojure.string :as string]
-            [clojure.tools.cli :as cli])
+            [clojure.tools.cli :as cli]
+            [io.aviso.ansi :as ansi])
   (:gen-class))
 
 (def version "0.1.0-SNAPSHOT")
-
-(def linters
-  [::linters/checkstyle
-   ::linters/cljfmt
-   ::linters/clj-kondo
-   ::linters/eastwood
-   ::linters/hadolint
-   ::linters/stylelint])
 
 (def excludes
   [#"project.clj$"
@@ -67,12 +62,16 @@
 
 (defn run-check
   [ref options]
-  (let [files (enum-files ref)
+  (let [diff-files (enum-files ref)
         enabled-linter? (if (:linter options)
-                          (set (map #(keyword "bosslint.linters" %) (:linter options)))
-                          (constantly true))]
-    (doseq [l (filter enabled-linter? linters)]
-      (linters/lint l files))))
+                          (comp (set (:linter options)) linter/name)
+                          (constantly true))
+        linters (filter enabled-linter? (descendants :bosslint/linter))]
+    (doseq [key linters]
+      (when-let [files (seq (linter/files key diff-files))]
+        (println (str (ansi/green (linter/name key)) ":"))
+        (linter/print-files files)
+        (linter/lint key files)))))
 
 (defn error-msg [errors]
   (str "The following errors occurred while parsing your command:\n\n"
@@ -87,7 +86,7 @@
 (def check-cmd-options
   [["-l" "--linter LINTER" "Select linter"
     :assoc-fn (fn [m k v] (update m k #(conj (or % []) v)))
-    :validate [(set (map name linters))]]
+    :validate [(set (map name (descendants :bosslint/linter)))]]
    ["-h" "--help" "Print help"]])
 
 (defn check-cmd-usage [options-summary]
@@ -124,8 +123,8 @@
 ;;; linters
 
 (defn linters-cmd [args]
-  (doseq [l linters]
-    (println (name l))))
+  (doseq [key (descendants :bosslint/linter)]
+    (println (linter/name key))))
 
 ;;; main
 
