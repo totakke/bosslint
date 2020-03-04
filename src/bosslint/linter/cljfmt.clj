@@ -1,20 +1,25 @@
 (ns bosslint.linter.cljfmt
-  (:require [bosslint.linter :as linter :refer [deflinter]]
+  (:require [bosslint.config :as config]
+            [bosslint.linter :as linter :refer [deflinter]]
             [bosslint.util :as util]
             [clojure.java.shell :as shell]))
 
 (defn- cljfmt-clojure
-  [files]
+  [files conf]
   (when (linter/check-command "clojure")
-    (let [ret (apply shell/sh "clojure"
-                     "-Sdeps" "{:deps {cljfmt {:mvn/version \"0.6.4\"}}}"
-                     "-m" "cljfmt.main" "check"
-                     (map :absolute-path files))]
+    (let [opt-indents (config/resolve-path (:indents conf))
+          args (flatten
+                (cond-> ["clojure"
+                         "-Sdeps" "{:deps {cljfmt {:mvn/version \"0.6.4\"}}}"
+                         "-m" "cljfmt.main" "check"]
+                  opt-indents (concat ["--indents" opt-indents])
+                  true (concat (map :absolute-path files))))
+          ret (apply shell/sh args)]
       (println (:out ret))
       (println (:err ret)))))
 
 (defn- cljfmt-lein
-  [files]
+  [files _]
   (when (and (util/command-exists? "lein")
              (zero? (:exit (shell/sh "lein" "deps" ":tree")))
              (not= (:out (shell/sh "lein" "cljfmt" "-h"))
@@ -30,7 +35,7 @@
   (files [diff-files]
     (linter/select-files diff-files [:clj :cljc :cljs]))
 
-  (lint [files]
+  (lint [files conf]
     (when-let [f (cond
                    (and (linter/leiningen-project?)
                         (util/command-exists? "lein"))
@@ -38,4 +43,4 @@
 
                    (util/command-exists? "clojure")
                    cljfmt-clojure)]
-      (f files))))
+      (f files conf))))

@@ -1,5 +1,6 @@
 (ns bosslint.linter.stylelint
-  (:require [bosslint.linter :as linter :refer [deflinter]]
+  (:require [bosslint.config :as config]
+            [bosslint.linter :as linter :refer [deflinter]]
             [clojure.java.shell :as shell]))
 
 (deflinter :linter/stylelint
@@ -8,7 +9,12 @@
   (files [diff-files]
     (linter/select-files diff-files [:css :sass]))
 
-  (lint [files]
+  (lint [files conf]
     (when (linter/check-command "stylelint")
-      (let [ret (apply shell/sh "stylelint" (map :absolute-path files))]
+      (let [opt-config (config/resolve-path (:config conf))
+            args (flatten
+                  (cond-> ["stylelint"]
+                    opt-config (concat ["--config" opt-config])
+                    true (concat (map :absolute-path files))))
+            ret (apply shell/sh args)]
         (println (:out ret))))))

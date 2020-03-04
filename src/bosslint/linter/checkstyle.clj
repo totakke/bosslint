@@ -1,5 +1,6 @@
 (ns bosslint.linter.checkstyle
-  (:require [bosslint.linter :as linter :refer [deflinter]]
+  (:require [bosslint.config :as config]
+            [bosslint.linter :as linter :refer [deflinter]]
             [clojure.java.shell :as shell]))
 
 (deflinter :linter/checkstyle
@@ -8,8 +9,12 @@
   (files [diff-files]
     (linter/select-files diff-files [:java]))
 
-  (lint [files]
+  (lint [files conf]
     (when (linter/check-command "checkstyle")
-      (let [ret (apply shell/sh "checkstyle" "-c" "google_checks.xml"
-                       (map :absolute-path files))]
+      (let [opt-config (config/resolve-path (:config conf))
+            args (flatten
+                  (cond-> ["checkstyle"]
+                    opt-config (concat ["-c" opt-config])
+                    true (concat (map :absolute-path files))))
+            ret (apply shell/sh args)]
         (println (:out ret))))))

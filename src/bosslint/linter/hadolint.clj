@@ -8,7 +8,7 @@
   (files [diff-files]
     (linter/select-files diff-files [:docker]))
 
-  (lint [files]
+  (lint [files _]
     (when (linter/check-command "hadolint")
       (let [ret (apply shell/sh "hadolint" (map :absolute-path files))]
         (println (:out ret))))))

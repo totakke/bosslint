@@ -39,7 +39,7 @@
   (files [diff-files]
     (linter/select-files diff-files [:clj :cljc]))
 
-  (lint [files]
+  (lint [files _]
     (when-let [f (cond
                    (and (util/command-exists? "clojure")
                         (linter/clojure-project?))

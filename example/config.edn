@@ -1,0 +1,5 @@
+{:checkstyle {:config "google_checks.xml"}
+
+ :cljfmt {:indents "indentation.edn"}
+
+ :stylelint {:config "stylelintrc.json"}}

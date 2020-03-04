@@ -1,5 +1,6 @@
 (ns bosslint.main
-  (:require [bosslint.linter :as linter]
+  (:require [bosslint.config :as config]
+            [bosslint.linter :as linter]
             (bosslint.linter checkstyle clj-kondo cljfmt eastwood hadolint
                              stylelint)
             [bosslint.util :as util]
@@ -66,12 +67,15 @@
         enabled-linter? (if (:linter options)
                           (comp (set (:linter options)) linter/name)
                           (constantly true))
-        linters (filter enabled-linter? (descendants :bosslint/linter))]
+        linters (filter enabled-linter? (descendants :bosslint/linter))
+        conf (if (:config options)
+               (config/load-config (:config options))
+               (config/load-config))]
     (doseq [key linters]
       (when-let [files (seq (linter/files key diff-files))]
         (println (str (ansi/green (linter/name key)) ":"))
         (linter/print-files files)
-        (linter/lint key files)))))
+        (linter/lint key files (get conf (keyword (name key))))))))
 
 (defn error-msg [errors]
   (str "The following errors occurred while parsing your command:\n\n"
@@ -84,7 +88,8 @@
 ;;; check
 
 (def check-cmd-options
-  [["-l" "--linter LINTER" "Select linter"
+  [["-c" "--config CONFIG" "Specify a configuration file (default: $HOME/.bosslint/config.edn)"]
+   ["-l" "--linter LINTER" "Select linter"
     :assoc-fn (fn [m k v] (update m k #(conj (or % []) v)))
     :validate [(set (map name (descendants :bosslint/linter)))]]
    ["-h" "--help" "Print help"]])

@@ -10,7 +10,7 @@
 
 (defmulti files (fn [key diff-files] key))
 
-(defmulti lint (fn [key files] key))
+(defmulti lint (fn [key files config] key))
 
 (defmacro deflinter
   {:style/indent [1 :form [:defn]]}

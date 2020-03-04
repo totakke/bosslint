@@ -8,7 +8,7 @@
   (files [diff-files]
     (linter/select-files diff-files [:clj :cljc :cljs]))
 
-  (lint [files]
+  (lint [files _]
     (when (linter/check-command "clj-kondo")
       (let [ret (apply shell/sh "clj-kondo" "--lint"
                        (map :absolute-path files))]
