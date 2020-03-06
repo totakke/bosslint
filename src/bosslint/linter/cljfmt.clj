@@ -2,7 +2,8 @@
   (:require [bosslint.config :as config]
             [bosslint.linter :as linter :refer [deflinter]]
             [bosslint.util :as util]
-            [clojure.java.shell :as shell]))
+            [clojure.java.shell :as shell]
+            [clojure.string :as string]))
 
 (defn- cljfmt-clojure
   [files conf]
@@ -15,8 +16,10 @@
                   opt-indents (concat ["--indents" opt-indents])
                   true (concat (map :absolute-path files))))
           ret (apply shell/sh args)]
-      (println (:out ret))
-      (println (:err ret)))))
+      (when-not (string/blank? (:out ret))
+        (println (string/trim-newline (:out ret))))
+      (when-not (string/blank? (:err ret))
+        (println (string/trim-newline (:err ret)))))))
 
 (defn- cljfmt-lein
   [files _]
@@ -26,14 +29,16 @@
                    "Task: 'cljfmt' not found"))
     (let [ret (apply shell/sh "lein" "cljfmt" "check"
                      (map :git-path files))]
-      (println (:out ret))
-      (println (:err ret)))))
+      (when-not (string/blank? (:out ret))
+        (println (string/trim-newline (:out ret))))
+      (when-not (string/blank? (:err ret))
+        (println (string/trim-newline (:err ret)))))))
 
 (deflinter :linter/cljfmt
   (name [] "cljfmt")
 
-  (files [diff-files]
-    (linter/select-files diff-files [:clj :cljc :cljs]))
+  (files [file-group]
+    (linter/select-files file-group [:clj :cljc :cljs]))
 
   (lint [files conf]
     (when-let [f (cond

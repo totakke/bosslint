@@ -19,7 +19,7 @@
                            (map path->ns)
                            (string/join " ")
                            (format "{:namespaces [%s]}")))]
-    (println (:out ret))))
+    (println (string/trim-newline (:out ret)))))
 
 (defn- eastwood-lein
   [files]
@@ -31,13 +31,13 @@
                              (map path->ns)
                              (string/join " ")
                              (format "{:namespaces [%s]}")))]
-      (println (:out ret)))))
+      (println (string/trim-newline (:out ret))))))
 
 (deflinter :linter/eastwood
   (name [] "eastwood")
 
-  (files [diff-files]
-    (linter/select-files diff-files [:clj :cljc]))
+  (files [file-group]
+    (linter/select-files file-group [:clj :cljc]))
 
   (lint [files _]
     (when-let [f (cond

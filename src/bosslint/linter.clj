@@ -3,12 +3,13 @@
   (:require [bosslint.util :as util]
             [clojure.edn :as edn]
             [clojure.java.shell :as shell]
-            [clojure.string :as string]
             [io.aviso.ansi :as ansi]))
+
+(def ^:dynamic *verbose?* false)
 
 (defmulti name identity)
 
-(defmulti files (fn [key diff-files] key))
+(defmulti files (fn [key file-group] key))
 
 (defmulti lint (fn [key files config] key))
 
@@ -24,14 +25,8 @@
        ~@defmethods)))
 
 (defn select-files
-  [files types]
-  (mapcat #(get files %) types))
-
-(defn print-files
-  [files]
-  (->> (map :git-path files)
-       (string/join \newline)
-       println))
+  [file-group types]
+  (mapcat #(get file-group %) types))
 
 (defn check-command
   [command]

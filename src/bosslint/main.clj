@@ -58,24 +58,54 @@
            (git-ls-files))
          (map (fn [s]
                 {:git-path s
-                 :absolute-path (str top-dir "/" s)}))
-         (group-by (comp path->type :git-path)))))
+                 :absolute-path (str top-dir "/" s)})))))
+
+(defn- desc-files [files]
+  (->> (map :git-path files)
+       (map #(str "  " %))
+       (string/join \newline)))
+
+(defn- desc-linters [linters]
+  (->> (map linter/name linters)
+       (map #(str "  " %))
+       (string/join \newline)))
 
 (defn run-check
   [ref options]
-  (let [diff-files (enum-files ref)
-        enabled-linter? (if (:linter options)
-                          (comp (set (:linter options)) linter/name)
-                          (constantly true))
-        linters (filter enabled-linter? (descendants :bosslint/linter))
-        conf (if (:config options)
-               (config/load-config (:config options))
-               (config/load-config))]
-    (doseq [key linters]
-      (when-let [files (seq (linter/files key diff-files))]
-        (println (str (ansi/green (linter/name key)) ":"))
-        (linter/print-files files)
-        (linter/lint key files (get conf (keyword (name key))))))))
+  (binding [linter/*verbose?* (:verbose options)]
+    (let [diff-files (enum-files ref)
+          file-group (group-by (comp path->type :git-path) diff-files)
+          enabled-linter? (if (:linter options)
+                            (comp (set (:linter options)) linter/name)
+                            (constantly true))
+          linters (filter enabled-linter? (descendants :bosslint/linter))
+          conf (if (:config options)
+                 (config/load-config (:config options))
+                 (config/load-config))]
+      (when linter/*verbose?*
+        (->> ["Enabled linters:"
+              (desc-linters linters)
+              "Diff files:"
+              (desc-files diff-files)
+              ""]
+             (string/join \newline)
+             ansi/cyan
+             println))
+      (doseq [key linters]
+        (if-let [files (seq (linter/files key file-group))]
+          (do (println (str (ansi/green (linter/name key)) ":"))
+              (when linter/*verbose?*
+                (->> ["Files:"
+                      (desc-files files)]
+                     (string/join \newline)
+                     ansi/cyan
+                     println))
+              (linter/lint key files (get conf (keyword (name key))))
+              (newline))
+          (when linter/*verbose?*
+            (println (str (ansi/green (linter/name key)) ":"))
+            (println (ansi/cyan "No files"))
+            (newline)))))))
 
 (defn error-msg [errors]
   (str "The following errors occurred while parsing your command:\n\n"
@@ -92,6 +122,7 @@
    ["-l" "--linter LINTER" "Select linter"
     :assoc-fn (fn [m k v] (update m k #(conj (or % []) v)))
     :validate [(set (map name (descendants :bosslint/linter)))]]
+   ["-v" "--verbose" "Make bosslint verbose during the operation"]
    ["-h" "--help" "Print help"]])
 
 (defn check-cmd-usage [options-summary]
@@ -135,7 +166,7 @@
 
 (def options
   [["-h" "--help" "Print help"]
-   ["-v" "--version" "Print version"]])
+   [nil "--version" "Print version"]])
 
 (def commands
   [["check" "Check files"]
