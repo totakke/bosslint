@@ -2,9 +2,38 @@
 
 ![build](https://github.com/totakke/bosslint/workflows/build/badge.svg)
 
+Good health is the most important thing.
+
+## Installation
+
+### Build
+
 ```console
-$ clojure -A:native-image
+$ clojure -Anative-image
+$ chmod +x bosslint
+$ mv bosslint [/your/PATH/dir/]
 ```
+
+## Usage
+
+```console
+$ bosslint check HEAD~1
+clj-kondo:
+...
+cljfmt:
+...
+stylelint:
+...
+```
+
+### Supported Linters
+
+- [clj-kondo](https://github.com/borkdude/clj-kondo)
+- [checkstyle](https://checkstyle.org/)
+- [cljfmt](https://github.com/weavejester/cljfmt)
+- [eastwood](https://github.com/jonase/eastwood)
+- [hadolint](https://github.com/hadolint/hadolint)
+- [stylelint](https://stylelint.io/)
 
 ## License
 
