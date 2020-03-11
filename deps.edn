@@ -1,7 +1,7 @@
 {:deps {clj-sub-command {:mvn/version "0.6.0"}
         io.aviso/pretty {:mvn/version "0.1.37"}
         org.clojure/clojure {:mvn/version "1.10.1"}
-        org.clojure/tools.cli {:mvn/version "0.4.2"}}
+        org.clojure/tools.cli {:mvn/version "1.0.194"}}
  :aliases {:native-image
            {:main-opts ["-m clj.native-image bosslint.main"
                         "--initialize-at-build-time"
