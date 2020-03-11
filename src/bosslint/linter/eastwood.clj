@@ -4,6 +4,10 @@
             [clojure.java.shell :as shell]
             [clojure.string :as string]))
 
+(def ^:private excludes
+  [#"project.clj$"
+   #"data_readers.clj$"])
+
 (defn- path->ns [s]
   (-> s
       (string/replace #"^(src|test)(/cljc?)?/(.*)\.cljc?$" "$3")
@@ -37,7 +41,9 @@
   (name [] "eastwood")
 
   (files [file-group]
-    (linter/select-files file-group [:clj :cljc]))
+    (->> (linter/select-files file-group [:clj :cljc])
+         (remove (fn [{:keys [git-path]}]
+                   (some #(re-find % git-path) excludes)))))
 
   (lint [files _]
     (when-let [f (cond
