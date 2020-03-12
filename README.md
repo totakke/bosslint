@@ -32,6 +32,7 @@ stylelint:
 - [checkstyle](https://checkstyle.org/)
 - [cljfmt](https://github.com/weavejester/cljfmt)
 - [eastwood](https://github.com/jonase/eastwood)
+- [flake8](https://flake8.pycqa.org/)
 - [hadolint](https://github.com/hadolint/hadolint)
 - [stylelint](https://stylelint.io/)
 

@@ -2,4 +2,7 @@
 
  :cljfmt {:indents "indentation.edn"}
 
+ :flake8 {:command-options ["--count"
+                            "--ignore=F401,E501"]}
+
  :stylelint {:config "stylelintrc.json"}}

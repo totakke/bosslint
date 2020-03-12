@@ -1,8 +1,8 @@
 (ns bosslint.main
   (:require [bosslint.config :as config]
             [bosslint.linter :as linter]
-            (bosslint.linter checkstyle clj-kondo cljfmt eastwood hadolint
-                             stylelint)
+            (bosslint.linter checkstyle clj-kondo cljfmt eastwood flake8
+                             hadolint stylelint)
             [bosslint.util :as util]
             [clj-sub-command.core :as cmd]
             [clojure.java.shell :as shell]
@@ -42,6 +42,7 @@
     #"\.cljs$"                :cljs
     #"Dockerfile(\.[-\w]+)?$" :docker
     #"\.java$"                :java
+    #"\.py$"                  :python
     #"\.s[ac]ss$"             :sass
     :other))
 
@@ -153,8 +154,10 @@
 ;;; linters
 
 (defn linters-cmd [args]
-  (doseq [key (descendants :bosslint/linter)]
-    (println (linter/name key))))
+  (doseq [s (->> (descendants :bosslint/linter)
+                 (map linter/name)
+                 sort)]
+    (println s)))
 
 ;;; main
 
