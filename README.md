@@ -26,6 +26,18 @@ stylelint:
 ...
 ```
 
+### Configuration
+
+bosslint implicitly loads `~/.bosslint/config.edn` file.
+
+Alternatively, you can specify a configuration file with `--config` option.
+
+```console
+$ bosslint check --config [/path/to/config.edn] master
+```
+
+Look at the [configuration example](example/config.edn).
+
 ### Supported Linters
 
 - [clj-kondo](https://github.com/borkdude/clj-kondo)
