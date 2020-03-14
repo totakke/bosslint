@@ -47,6 +47,7 @@ Look at the [configuration example](example/config.edn).
 - [flake8](https://flake8.pycqa.org/)
 - [hadolint](https://github.com/hadolint/hadolint)
 - [stylelint](https://stylelint.io/)
+- [Swiftlint](https://realm.github.io/SwiftLint/)
 
 ## License
 
