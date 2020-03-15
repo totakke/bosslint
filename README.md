@@ -6,7 +6,26 @@ Good health is the most important thing.
 
 ## Installation
 
+### Mac OS
+
+```console
+$ curl -sSL https://github.com/totakke/bosslint/releases/download/0.1.0/bosslint_macos -o bosslint
+$ chmod +x bosslint
+$ mv bosslint [/your/PATH/dir/]
+```
+
+### Linux
+
+```console
+$ curl -sSL https://github.com/totakke/bosslint/releases/download/0.1.0/bosslint_linux -o bosslint
+$ chmod +x bosslint
+$ mv bosslint [/your/PATH/dir/]
+```
+
 ### Build
+
+You must setup GraalVM's `native-image` and set `GRAALVM_HOME` environment
+variable.
 
 ```console
 $ clojure -Anative-image
@@ -19,11 +38,15 @@ $ mv bosslint [/your/PATH/dir/]
 ```console
 $ bosslint check HEAD~1
 clj-kondo:
-...
+linting took 281ms, errors: 0, warnings: 0
+
 cljfmt:
+All source files formatted correctly
+
+eastwood:
 ...
-stylelint:
-...
+== Linting done in 1887 ms ==
+== Warnings: 0 (not including reflection warnings)  Exceptions thrown: 0
 ```
 
 ### Configuration
@@ -47,7 +70,7 @@ Look at the [configuration example](example/config.edn).
 - [flake8](https://flake8.pycqa.org/)
 - [hadolint](https://github.com/hadolint/hadolint)
 - [stylelint](https://stylelint.io/)
-- [Swiftlint](https://realm.github.io/SwiftLint/)
+- [SwiftLint](https://realm.github.io/SwiftLint/)
 
 ## License
 
