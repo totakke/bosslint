@@ -1,11 +1,11 @@
-{:checkstyle {:config "google_checks.xml"}
+{:checkstyle {:command-options ["-c" "google_checks.xml"]}
 
  :cljfmt {:version "0.6.4"
-          :indents "indentation.edn"}
+          :clojure {:command-options ["--indents" "/path/to/indentation.edn"]}}
 
  :eastwood {:version "0.3.7"}
 
  :flake8 {:command-options ["--count"
                             "--ignore=F401,E501"]}
 
- :stylelint {:config "stylelintrc.json"}}
+ :stylelint {:command-options ["--config" "/path/to/stylelintrc.json"]}}

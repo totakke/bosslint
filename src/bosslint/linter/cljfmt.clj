@@ -1,6 +1,5 @@
 (ns bosslint.linter.cljfmt
-  (:require [bosslint.config :as config]
-            [bosslint.linter :as linter :refer [deflinter]]
+  (:require [bosslint.linter :as linter :refer [deflinter]]
             [bosslint.util :as util]
             [clojure.java.shell :as shell]
             [clojure.string :as string]
@@ -9,13 +8,11 @@
 (defn- cljfmt-clojure
   [files conf]
   (let [version (or (:version conf) "RELEASE")
-        opt-indents (config/resolve-path (:indents conf))
-        args (flatten
-              (cond-> ["clojure"
-                       "-Sdeps" (format "{:deps {cljfmt {:mvn/version \"%s\"}}}" version)
-                       "-m" "cljfmt.main" "check"]
-                opt-indents (concat ["--indents" opt-indents])
-                true (concat (map :absolute-path files))))
+        args (concat ["clojure"
+                      "-Sdeps" (format "{:deps {cljfmt {:mvn/version \"%s\"}}}" version)
+                      "-m" "cljfmt.main" "check"]
+                     (:command-options (:clojure conf))
+                     (map :absolute-path files))
         ret (apply shell/sh args)]
     (when-not (string/blank? (:out ret))
       (println (string/trim-newline (:out ret))))
