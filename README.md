@@ -1,4 +1,4 @@
-# bosslint
+# Bosslint
 
 ![build](https://github.com/totakke/bosslint/workflows/build/badge.svg)
 
@@ -29,7 +29,6 @@ variable.
 
 ```console
 $ clojure -Anative-image
-$ chmod +x bosslint
 $ mv bosslint [/your/PATH/dir/]
 ```
 
@@ -51,7 +50,7 @@ eastwood:
 
 ### Configuration
 
-bosslint implicitly loads `~/.bosslint/config.edn` file.
+Bosslint implicitly loads `~/.bosslint/config.edn` file.
 
 Alternatively, you can specify a configuration file with `--config` option.
 
@@ -63,12 +62,12 @@ Look at the [configuration example](example/config.edn).
 
 ### Supported Linters
 
+- [Checkstyle](https://checkstyle.org/)
 - [clj-kondo](https://github.com/borkdude/clj-kondo)
-- [checkstyle](https://checkstyle.org/)
 - [cljfmt](https://github.com/weavejester/cljfmt)
 - [dartanalyzer](https://dart.dev/tools/dartanalyzer)
-- [eastwood](https://github.com/jonase/eastwood)
-- [flake8](https://flake8.pycqa.org/)
+- [Eastwood](https://github.com/jonase/eastwood)
+- [Flake8](https://flake8.pycqa.org/)
 - [hadolint](https://github.com/hadolint/hadolint)
 - [stylelint](https://stylelint.io/)
 - [SwiftLint](https://realm.github.io/SwiftLint/)
