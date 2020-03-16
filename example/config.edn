@@ -5,6 +5,8 @@
 
  :eastwood {:version "0.3.7"}
 
+ :dartanalyzer {:command-options ["--no-hints"]}
+
  :flake8 {:command-options ["--count"
                             "--ignore=F401,E501"]}
 

@@ -1,8 +1,8 @@
 (ns bosslint.main
   (:require [bosslint.config :as config]
             [bosslint.linter :as linter]
-            (bosslint.linter checkstyle clj-kondo cljfmt eastwood flake8
-                             hadolint stylelint swiftlint)
+            (bosslint.linter checkstyle clj-kondo cljfmt dartanalyzer eastwood
+                             flake8 hadolint stylelint swiftlint)
             [bosslint.util :as util]
             [clj-sub-command.core :as cmd]
             [clojure.java.shell :as shell]
@@ -40,6 +40,7 @@
     #"\.clj$"                 :clj
     #"\.cljc$"                :cljc
     #"\.cljs$"                :cljs
+    #"\.dart$"                :dart
     #"Dockerfile(\.[-\w]+)?$" :docker
     #"\.java$"                :java
     #"\.py$"                  :python

@@ -66,6 +66,7 @@ Look at the [configuration example](example/config.edn).
 - [clj-kondo](https://github.com/borkdude/clj-kondo)
 - [checkstyle](https://checkstyle.org/)
 - [cljfmt](https://github.com/weavejester/cljfmt)
+- [dartanalyzer](https://dart.dev/tools/dartanalyzer)
 - [eastwood](https://github.com/jonase/eastwood)
 - [flake8](https://flake8.pycqa.org/)
 - [hadolint](https://github.com/hadolint/hadolint)
