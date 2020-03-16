@@ -11,7 +11,7 @@
             [io.aviso.ansi :as ansi])
   (:gen-class))
 
-(def version "0.1.0")
+(def version "0.2.0-SNAPSHOT")
 
 (defn- assert-command [command]
   (when-not (util/command-exists? command)
