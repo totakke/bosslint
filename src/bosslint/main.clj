@@ -17,11 +17,15 @@
   (when-not (util/command-exists? command)
     (throw (ex-info (str "Command not found: " command) {}))))
 
-(defn git-diff [ref]
+(defn git-diff
+  [ref1 ref2]
   (assert-command "git")
-  (->> (shell/sh "git" "diff" "--name-only" "--diff-filter=AMRTU" ref)
-       :out
-       string/split-lines))
+  (let [args (cond-> ["git" "diff" "--name-only" "--diff-filter=AMRTU"]
+               ref1 (conj ref1)
+               ref2 (conj ref2))]
+    (->> (apply shell/sh args)
+         :out
+         string/split-lines)))
 
 (defn git-ls-files []
   (assert-command "git")
@@ -48,11 +52,11 @@
     #"\.swift$"               :swift
     :other))
 
-(defn enum-files [ref]
+(defn enum-files [ref1 ref2]
   (let [top-dir (git-top-dir)]
-    (->> (if ref
-           (git-diff ref)
-           (git-ls-files))
+    (->> (if (= ref1 ":all")
+           (git-ls-files)
+           (git-diff ref1 ref2))
          (map (fn [s]
                 {:git-path s
                  :absolute-path (str top-dir "/" s)})))))
@@ -68,9 +72,9 @@
        (string/join \newline)))
 
 (defn run-check
-  [ref options]
+  [ref1 ref2 options]
   (binding [linter/*verbose?* (:verbose options)]
-    (let [diff-files (enum-files ref)
+    (let [diff-files (enum-files ref1 ref2)
           file-group (group-by (comp path->type :git-path) diff-files)
           enabled-linter? (if (:linter options)
                             (comp (set (:linter options)) linter/name)
@@ -123,7 +127,7 @@
    ["-h" "--help" "Print help"]])
 
 (defn check-cmd-usage [options-summary]
-  (->> ["Usage: bosslint check [<options>] [<commit>]"
+  (->> ["Usage: bosslint check [<options>] [<commit> [<commit>]]"
         ""
         "Options:"
         options-summary]
@@ -141,21 +145,21 @@
       errors
       {:exit-message (error-msg errors)}
 
-      (<= (count arguments) 1)
-      {:ref (first arguments) :options options}
+      (<= (count arguments) 2)
+      {:ref1 (first arguments) :ref2 (second arguments) :options options}
 
       :else
       {:exit-message (check-cmd-usage summary)})))
 
 (defn check-cmd [args]
-  (let [{:keys [ref options exit-message ok?]} (validate-check-cmd-args args)]
+  (let [{:keys [ref1 ref2 options exit-message ok?]} (validate-check-cmd-args args)]
     (if exit-message
       (exit (if ok? 0 1) exit-message)
-      (run-check ref options))))
+      (run-check ref1 ref2 options))))
 
 ;;; linters
 
-(defn linters-cmd [args]
+(defn linters-cmd [_]
   (doseq [s (->> (descendants :bosslint/linter)
                  (map linter/name)
                  sort)]
