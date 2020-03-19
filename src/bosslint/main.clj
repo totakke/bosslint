@@ -2,7 +2,7 @@
   (:require [bosslint.config :as config]
             [bosslint.linter :as linter]
             (bosslint.linter checkstyle clj-kondo cljfmt dartanalyzer eastwood
-                             flake8 hadolint stylelint swiftlint)
+                             flake8 hadolint stylelint swiftlint yamllint)
             [bosslint.util :as util]
             [clj-sub-command.core :as cmd]
             [clojure.java.shell :as shell]
@@ -50,6 +50,7 @@
     #"\.py$"                  :python
     #"\.s[ac]ss$"             :sass
     #"\.swift$"               :swift
+    #"\.ya?ml$"               :yaml
     :other))
 
 (defn enum-files [ref1 ref2]
