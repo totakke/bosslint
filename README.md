@@ -1,15 +1,20 @@
 # Bosslint
 
 ![build](https://github.com/totakke/bosslint/workflows/build/badge.svg)
+![release](https://img.shields.io/badge/release-v0.2.0-blue.svg)
 
-Good health is the most important thing.
+Meta linter for easily checking
+
+> Good health is the most important thing. More than success, more than money, more than power.
+>
+> &mdash; Hyman Roth / The Godfather Part II
 
 ## Installation
 
 ### Mac OS
 
 ```console
-$ curl -sSL https://github.com/totakke/bosslint/releases/download/0.1.0/bosslint_macos -o bosslint
+$ curl -sSL https://github.com/totakke/bosslint/releases/download/0.2.0/bosslint_macos -o bosslint
 $ chmod +x bosslint
 $ mv bosslint [/your/PATH/dir/]
 ```
@@ -17,7 +22,7 @@ $ mv bosslint [/your/PATH/dir/]
 ### Linux
 
 ```console
-$ curl -sSL https://github.com/totakke/bosslint/releases/download/0.1.0/bosslint_linux -o bosslint
+$ curl -sSL https://github.com/totakke/bosslint/releases/download/0.2.0/bosslint_linux -o bosslint
 $ chmod +x bosslint
 $ mv bosslint [/your/PATH/dir/]
 ```
@@ -34,6 +39,9 @@ $ mv bosslint [/your/PATH/dir/]
 
 ## Usage
 
+Bosslint collects changed files under Git version control and checks them with
+appropriate linters.
+
 ```console
 $ bosslint check HEAD~1
 clj-kondo:
@@ -46,6 +54,12 @@ eastwood:
 ...
 == Linting done in 1887 ms ==
 == Warnings: 0 (not including reflection warnings)  Exceptions thrown: 0
+```
+
+Use `:all` to check all files under a Git project.
+
+```console
+$ bosslint check :all
 ```
 
 ### Configuration
@@ -71,6 +85,7 @@ Look at the [configuration example](example/config.edn).
 - [hadolint](https://github.com/hadolint/hadolint)
 - [stylelint](https://stylelint.io/)
 - [SwiftLint](https://realm.github.io/SwiftLint/)
+- [yamllint](https://yamllint.readthedocs.io/)
 
 ## License
 
