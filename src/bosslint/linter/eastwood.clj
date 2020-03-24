@@ -9,11 +9,16 @@
   [#"project.clj$"
    #"data_readers.clj$"])
 
-(defn- path->ns [s]
-  (-> s
-      (string/replace #"^(src|test)(/cljc?)?/(.*)\.cljc?$" "$3")
-      (string/replace #"_" "-")
-      (string/replace #"/" ".")))
+(def ^:private path-res
+  [#"^(?:src|test)/main/clojure/(.*)\.cljc?$"
+   #"^(?:src|test|dev)/(?:cljc?/)?(.*)\.cljc?$"])
+
+(defn- path->ns
+  [path]
+  (when-let [[_ s] (some #(re-find % path) path-res)]
+    (-> s
+        (string/replace #"_" "-")
+        (string/replace #"/" "."))))
 
 (defn- eastwood-clojure
   [files conf]
