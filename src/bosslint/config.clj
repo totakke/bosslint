@@ -15,10 +15,3 @@
        {})))
   ([file]
    (edn/read-string (slurp file))))
-
-(defn resolve-path [s]
-  (when s
-    (let [file (io/file (config-dir) s)]
-      (if (.exists file)
-        (.getAbsolutePath file)
-        (throw (ex-info (str "File not found:" s) {}))))))

@@ -2,13 +2,14 @@
         io.aviso/pretty {:mvn/version "0.1.37"}
         org.clojure/clojure {:mvn/version "1.10.1"}
         org.clojure/tools.cli {:mvn/version "1.0.194"}}
- :aliases {:native-image
-           {:main-opts ["-m clj.native-image bosslint.main"
-                        "--initialize-at-build-time"
-                        "--no-fallback"
-                        "-H:Name=bosslint"]
-            :jvm-opts ["-Dclojure.compiler.direct-linking=true"]
-            :extra-deps
-            {clj.native-image
-             {:git/url "https://github.com/taylorwood/clj.native-image.git"
-              :sha "7708e7fd4572459c81f6a6b8e44c96f41cdd92d4"}}}}}
+ :aliases {:native-image {:extra-deps {clj.native-image {:git/url "https://github.com/taylorwood/clj.native-image.git"
+                                                         :sha "7708e7fd4572459c81f6a6b8e44c96f41cdd92d4"}}
+                          :jvm-opts ["-Dclojure.compiler.direct-linking=true"]
+                          :main-opts ["-m" "clj.native-image" "bosslint.main"
+                                      "--initialize-at-build-time"
+                                      "--no-fallback"
+                                      "-H:Name=bosslint"]}
+           :test {:extra-paths ["test"]
+                  :extra-deps {com.cognitect/test-runner {:git/url "https://github.com/cognitect-labs/test-runner.git"
+                                                          :sha "209b64504cb3bd3b99ecfec7937b358a879f55c1"}}
+                  :main-opts ["-m" "cognitect.test-runner"]}}}
