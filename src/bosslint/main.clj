@@ -13,6 +13,9 @@
 
 (def version "0.2.1-SNAPSHOT")
 
+(defn- list-linters []
+  (sort-by linter/name (descendants :bosslint/linter)))
+
 (defn- assert-command [command]
   (when-not (util/command-exists? command)
     (throw (ex-info (str "Command not found: " command) {}))))
@@ -80,7 +83,7 @@
           enabled-linter? (if (:linter options)
                             (comp (set (:linter options)) linter/name)
                             (constantly true))
-          linters (filter enabled-linter? (descendants :bosslint/linter))
+          linters (filter enabled-linter? (list-linters))
           conf (if (:config options)
                  (config/load-config (:config options))
                  (config/load-config))]
@@ -123,7 +126,7 @@
   [["-c" "--config CONFIG" "Specify a configuration file (default: $HOME/.bosslint/config.edn)"]
    ["-l" "--linter LINTER" "Select linter"
     :assoc-fn (fn [m k v] (update m k #(conj (or % []) v)))
-    :validate [(set (map name (descendants :bosslint/linter)))]]
+    :validate [(set (map name (list-linters)))]]
    ["-v" "--verbose" "Make bosslint verbose during the operation"]
    ["-h" "--help" "Print help"]])
 
@@ -161,9 +164,7 @@
 ;;; linters
 
 (defn linters-cmd [_]
-  (doseq [s (->> (descendants :bosslint/linter)
-                 (map linter/name)
-                 sort)]
+  (doseq [s (map linter/name (list-linters))]
     (println s)))
 
 ;;; main
