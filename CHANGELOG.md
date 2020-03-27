@@ -1,5 +1,12 @@
 # Changelog
 
+## [Unreleased]
+
+### Fixed
+
+- Fix path->ns. ([e2a2e68](https://github.com/totakke/bosslint/commit/e2a2e68))
+- Sort linters alphabetically. ([8c2f799](https://github.com/totakke/bosslint/commit/8c2f799))
+
 ## [0.2.0] - 2020-03-20
 
 ### Added
