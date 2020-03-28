@@ -11,7 +11,7 @@
             [io.aviso.ansi :as ansi])
   (:gen-class))
 
-(def version "0.2.1-SNAPSHOT")
+(def version "0.2.1")
 
 (defn- list-linters []
   (sort-by linter/name (descendants :bosslint/linter)))

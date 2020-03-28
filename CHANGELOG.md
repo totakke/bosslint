@@ -1,6 +1,6 @@
 # Changelog
 
-## [Unreleased]
+## [0.2.1] - 2020-03-28
 
 ### Fixed
 
@@ -22,6 +22,7 @@
 
 First release.
 
-[Unreleased]: https://github.com/totakke/bosslint/compare/0.2.0...HEAD
+[Unreleased]: https://github.com/totakke/bosslint/compare/0.2.1...HEAD
+[0.2.1]: https://github.com/totakke/bosslint/compare/0.2.0...0.2.1
 [0.2.0]: https://github.com/totakke/bosslint/compare/0.1.0...0.2.0
 [0.1.0]: https://github.com/totakke/bosslint/compare/b32d91e...0.1.0
