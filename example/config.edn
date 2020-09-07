@@ -12,4 +12,6 @@
 
  :stylelint {:command-options ["--config" "/path/to/stylelintrc.json"]}
 
+ :tflint {:command-options ["-f" "json"]}
+
  :yamllint {:command-options ["--no-warnings"]}}
