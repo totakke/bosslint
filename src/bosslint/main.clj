@@ -2,7 +2,7 @@
   (:require [bosslint.config :as config]
             [bosslint.linter :as linter]
             (bosslint.linter checkstyle clj-kondo cljfmt dartanalyzer eastwood
-                             flake8 hadolint stylelint swiftlint tflint
+                             flake8 hadolint kubeval stylelint swiftlint tflint
                              yamllint)
             [bosslint.util :as util]
             [clj-sub-command.core :as cmd]

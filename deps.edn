@@ -1,4 +1,5 @@
-{:deps {clj-sub-command {:mvn/version "0.6.0"}
+{:deps {clj-commons/clj-yaml {:mvn/version "0.7.2"}
+        clj-sub-command {:mvn/version "0.6.0"}
         io.aviso/pretty {:mvn/version "0.1.37"}
         org.clojure/clojure {:mvn/version "1.10.1"}
         org.clojure/tools.cli {:mvn/version "1.0.194"}}

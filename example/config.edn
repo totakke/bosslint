@@ -10,6 +10,8 @@
  :flake8 {:command-options ["--count"
                             "--ignore=F401,E501"]}
 
+ :kubeval {:command-options ["--strict"]}
+
  :stylelint {:command-options ["--config" "/path/to/stylelintrc.json"]}
 
  :tflint {:command-options ["-f" "json"]}
