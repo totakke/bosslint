@@ -33,7 +33,7 @@ You must setup GraalVM's `native-image` and set `GRAALVM_HOME` environment
 variable.
 
 ```console
-$ clojure -Anative-image
+$ clojure -M:native-image
 $ mv bosslint [/your/PATH/dir/]
 ```
 
@@ -89,7 +89,7 @@ Look at the [configuration example](example/config.edn).
 
 ## License
 
-Copyright © 2020 [Toshiki Takeuchi](https://totakke.net/)
+Copyright © 2020-2021 [Toshiki Takeuchi](https://totakke.net/)
 
 This program and the accompanying materials are made available under the
 terms of the Eclipse Public License 2.0 which is available at

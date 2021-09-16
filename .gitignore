@@ -2,3 +2,4 @@
 /.cpcache
 
 /bosslint
+/bosslint.build_artifacts.txt
