@@ -1,8 +1,8 @@
-{:deps {clj-commons/clj-yaml {:mvn/version "0.7.2"}
+{:deps {clj-commons/clj-yaml {:mvn/version "0.7.107"}
         clj-sub-command/clj-sub-command {:mvn/version "0.6.0"}
-        io.aviso/pretty {:mvn/version "0.1.37"}
-        org.clojure/clojure {:mvn/version "1.10.1"}
-        org.clojure/tools.cli {:mvn/version "1.0.194"}}
+        io.aviso/pretty {:mvn/version "1.1"}
+        org.clojure/clojure {:mvn/version "1.10.3"}
+        org.clojure/tools.cli {:mvn/version "1.0.206"}}
  :aliases {:native-image {:extra-deps
                           {clj.native-image/clj.native-image
                            {:git/url "https://github.com/taylorwood/clj.native-image.git"
