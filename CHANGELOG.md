@@ -1,5 +1,17 @@
 # Changelog
 
+## [Unreleased]
+
+### Added
+
+- Add tflint linter. ([d57bed9](https://github.com/totakke/bosslint/commit/d57bed9))
+- Add kubeval linter. ([e982151](https://github.com/totakke/bosslint/commit/e982151))
+- Add jsonlint linter. ([669111e](https://github.com/totakke/bosslint/commit/669111e))
+
+### Fixed
+
+- Fix cljfmt args. ([372fc22](https://github.com/totakke/bosslint/commit/372fc22))
+
 ## [0.2.1] - 2020-03-28
 
 ### Fixed
