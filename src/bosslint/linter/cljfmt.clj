@@ -9,8 +9,8 @@
   [files conf]
   (let [version (or (:version conf) "RELEASE")
         args (concat ["clojure"
-                      "-Sdeps" (format "{:deps {cljfmt {:mvn/version \"%s\"}}}" version)
-                      "-m" "cljfmt.main" "check"]
+                      "-Sdeps" (format "{:deps {cljfmt/cljfmt {:mvn/version \"%s\"}}}" version)
+                      "-M" "-m" "cljfmt.main" "check"]
                      (:command-options (:clojure conf))
                      (map :absolute-path files))
         ret (apply shell/sh args)]
