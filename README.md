@@ -1,7 +1,7 @@
 # Bosslint
 
 ![build](https://github.com/totakke/bosslint/workflows/build/badge.svg)
-![release](https://img.shields.io/badge/release-v0.2.1-blue.svg)
+![release](https://img.shields.io/badge/release-v0.3.0-blue.svg)
 
 Meta linter for easily checking
 
@@ -14,7 +14,7 @@ Meta linter for easily checking
 ### Mac OS
 
 ```console
-$ curl -sSL https://github.com/totakke/bosslint/releases/download/0.2.1/bosslint_macos -o bosslint
+$ curl -sSL https://github.com/totakke/bosslint/releases/download/0.3.0/bosslint_macos -o bosslint
 $ chmod +x bosslint
 $ mv bosslint [/your/PATH/dir/]
 ```
@@ -22,7 +22,7 @@ $ mv bosslint [/your/PATH/dir/]
 ### Linux
 
 ```console
-$ curl -sSL https://github.com/totakke/bosslint/releases/download/0.2.1/bosslint_linux -o bosslint
+$ curl -sSL https://github.com/totakke/bosslint/releases/download/0.3.0/bosslint_linux -o bosslint
 $ chmod +x bosslint
 $ mv bosslint [/your/PATH/dir/]
 ```
