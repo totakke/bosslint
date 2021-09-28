@@ -29,11 +29,17 @@ $ mv bosslint [/your/PATH/dir/]
 
 ### Build
 
-You must setup GraalVM's `native-image` and set `GRAALVM_HOME` environment
-variable.
+To build Bosslint yourself, you must install [Clojure CLI tools](https://clojure.org/guides/getting_started#_clojure_installer_and_cli_tools),
+[GraalVM](https://www.graalvm.org/docs/getting-started/#install-graalvm) and
+GraalVM's [`native-image`](https://www.graalvm.org/docs/getting-started/#native-images).
+Additionally, `GRAALVM_HOME` environment variable must be set.
 
 ```console
 $ clojure -M:native-image
+Compiling bosslint.main
+[bosslint:18646]    classlist:   5,987.00 ms,  1.19 GB
+ ...
+[bosslint:18646]      [total]:  79,934.19 ms,  4.65 GB
 $ mv bosslint [/your/PATH/dir/]
 ```
 
@@ -83,8 +89,11 @@ Look at the [configuration example](example/config.edn).
 - [Eastwood](https://github.com/jonase/eastwood)
 - [Flake8](https://flake8.pycqa.org/)
 - [hadolint](https://github.com/hadolint/hadolint)
+- [jsonlint](https://github.com/zaach/jsonlint)
+- [kubeval](https://www.kubeval.com/)
 - [stylelint](https://stylelint.io/)
 - [SwiftLint](https://realm.github.io/SwiftLint/)
+- [tflint](https://github.com/terraform-linters/tflint)
 - [yamllint](https://yamllint.readthedocs.io/)
 
 ## License
