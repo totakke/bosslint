@@ -9,6 +9,7 @@
                             :sha "4604ae76855e09cdabc0a2ecc5a7de2cc5b775d6"}}
                           :jvm-opts ["-Dclojure.compiler.direct-linking=true"]
                           :main-opts ["-m" "clj.native-image" "bosslint.main"
+                                      "--diagnostics-mode"
                                       "--initialize-at-build-time"
                                       "--no-fallback"
                                       "-H:Name=bosslint"]}
