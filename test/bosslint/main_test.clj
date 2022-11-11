@@ -11,10 +11,11 @@
     "path/to/Dockerfile"     :docker
     "path/to/Dockerfile.dev" :docker
     "path/to/foo.java"       :java
+    "path/to/README.md"      :markdown
     "path/to/foo.py"         :python
     "path/to/foo.sass"       :sass
     "path/to/foo.scss"       :sass
     "path/to/foo.swift"      :swift
     "path/to/foo.yml"        :yaml
     "path/to/foo.yaml"       :yaml
-    "path/to/README.md"      :other))
+    "path/to/foo"            :other))
