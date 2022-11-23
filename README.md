@@ -1,11 +1,12 @@
 # Bosslint
 
-![build](https://github.com/totakke/bosslint/workflows/build/badge.svg)
-![release](https://img.shields.io/badge/release-v0.3.0-blue.svg)
+[![build](https://github.com/totakke/bosslint/actions/workflows/build.yml/badge.svg)](https://github.com/totakke/bosslint/actions/workflows/build.yml)
+[![release](https://img.shields.io/badge/release-v0.3.0-blue.svg)](https://github.com/totakke/bosslint/releases/tag/0.3.0)
 
 Meta linter for easily checking
 
-> Good health is the most important thing. More than success, more than money, more than power.
+> Good health is the most important thing. More than success, more than money,
+> more than power.
 >
 > &mdash; Hyman Roth / The Godfather Part II
 
@@ -13,18 +14,18 @@ Meta linter for easily checking
 
 ### Mac OS
 
-```console
-$ curl -sSL https://github.com/totakke/bosslint/releases/download/0.3.0/bosslint_macos -o bosslint
-$ chmod +x bosslint
-$ mv bosslint [/your/PATH/dir/]
+```sh
+curl -sSL https://github.com/totakke/bosslint/releases/download/0.3.0/bosslint_macos -o bosslint
+chmod +x bosslint
+mv bosslint [/your/PATH/dir/]
 ```
 
 ### Linux
 
-```console
-$ curl -sSL https://github.com/totakke/bosslint/releases/download/0.3.0/bosslint_linux -o bosslint
-$ chmod +x bosslint
-$ mv bosslint [/your/PATH/dir/]
+```sh
+curl -sSL https://github.com/totakke/bosslint/releases/download/0.3.0/bosslint_linux -o bosslint
+chmod +x bosslint
+mv bosslint [/your/PATH/dir/]
 ```
 
 ### Build
@@ -37,9 +38,8 @@ Additionally, `GRAALVM_HOME` environment variable must be set.
 ```console
 $ clojure -M:native-image
 Compiling bosslint.main
-[bosslint:18646]    classlist:   5,987.00 ms,  1.19 GB
  ...
-[bosslint:18646]      [total]:  79,934.19 ms,  4.65 GB
+Finished generating 'bosslint' in 17.8s.
 $ mv bosslint [/your/PATH/dir/]
 ```
 
@@ -64,8 +64,8 @@ eastwood:
 
 Use `:all` to check all files under a Git project.
 
-```console
-$ bosslint check :all
+```sh
+bosslint check :all
 ```
 
 ### Configuration
@@ -74,8 +74,8 @@ Bosslint implicitly loads `~/.bosslint/config.edn` file.
 
 Alternatively, you can specify a configuration file with `--config` option.
 
-```console
-$ bosslint check --config [/path/to/config.edn] master
+```sh
+bosslint check --config [/path/to/config.edn] master
 ```
 
 Look at the [configuration example](example/config.edn).
@@ -98,15 +98,15 @@ Look at the [configuration example](example/config.edn).
 
 ## License
 
-Copyright © 2020-2021 [Toshiki Takeuchi](https://totakke.net/)
+Copyright © 2020-2022 [Toshiki Takeuchi](https://totakke.net/)
 
 This program and the accompanying materials are made available under the
 terms of the Eclipse Public License 2.0 which is available at
-http://www.eclipse.org/legal/epl-2.0.
+<http://www.eclipse.org/legal/epl-2.0>.
 
 This Source Code may also be made available under the following Secondary
 Licenses when the conditions for such availability set forth in the Eclipse
 Public License, v. 2.0 are satisfied: GNU General Public License as published by
 the Free Software Foundation, either version 2 of the License, or (at your
 option) any later version, with the GNU Classpath Exception which is available
-at https://www.gnu.org/software/classpath/license.html.
+at <https://www.gnu.org/software/classpath/license.html>.
