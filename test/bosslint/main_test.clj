@@ -15,6 +15,7 @@
     "path/to/foo.py"         :python
     "path/to/foo.sass"       :sass
     "path/to/foo.scss"       :sass
+    "path/to/foo.sql"        :sql
     "path/to/foo.swift"      :swift
     "path/to/foo.yml"        :yaml
     "path/to/foo.yaml"       :yaml

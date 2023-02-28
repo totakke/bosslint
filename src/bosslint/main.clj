@@ -3,7 +3,7 @@
             [bosslint.linter :as linter]
             (bosslint.linter checkstyle clj-kondo cljfmt dartanalyzer eastwood
                              flake8 hadolint jsonlint kubeval markdownlint
-                             stylelint swiftlint tflint yamllint)
+                             sql-lint stylelint swiftlint tflint yamllint)
             [bosslint.util :as util]
             [clj-sub-command.core :as cmd]
             [clojure.java.shell :as shell]
@@ -55,6 +55,7 @@
     #"\.(md|markdown)$"       :markdown
     #"\.py$"                  :python
     #"\.s[ac]ss$"             :sass
+    #"\.sql$"                 :sql
     #"\.swift$"               :swift
     #"\.tf$"                  :terraform
     #"\.ya?ml$"               :yaml
