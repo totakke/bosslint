@@ -1,7 +1,7 @@
 # Bosslint
 
 [![build](https://github.com/totakke/bosslint/actions/workflows/build.yml/badge.svg)](https://github.com/totakke/bosslint/actions/workflows/build.yml)
-[![release](https://img.shields.io/badge/release-v0.3.0-blue.svg)](https://github.com/totakke/bosslint/releases/tag/0.3.0)
+[![release](https://img.shields.io/badge/release-v0.4.0-blue.svg)](https://github.com/totakke/bosslint/releases/tag/0.3.0)
 
 Meta linter for easily checking
 
@@ -12,18 +12,19 @@ Meta linter for easily checking
 
 ## Installation
 
-### Mac OS
+### OS & arch
+
+- `os`
+  - Mac OS - `macos`
+  - Linux - `linux`
+- `arch`
+  - amd64 - `amd64`
+  - aarch64 - `aarch64`
+
+### Download & install
 
 ```sh
-curl -sSL https://github.com/totakke/bosslint/releases/download/0.3.0/bosslint_macos -o bosslint
-chmod +x bosslint
-mv bosslint [/your/PATH/dir/]
-```
-
-### Linux
-
-```sh
-curl -sSL https://github.com/totakke/bosslint/releases/download/0.3.0/bosslint_linux -o bosslint
+curl -sSL https://github.com/totakke/bosslint/releases/download/0.4.0/bosslint_[os]_[arch] -o bosslint
 chmod +x bosslint
 mv bosslint [/your/PATH/dir/]
 ```
@@ -91,6 +92,8 @@ Look at the [configuration example](example/config.edn).
 - [hadolint](https://github.com/hadolint/hadolint)
 - [jsonlint](https://github.com/zaach/jsonlint)
 - [kubeval](https://www.kubeval.com/)
+- [markdownlint](https://github.com/igorshubovych/markdownlint-cli)
+- [sql-lint](https://github.com/joereynolds/sql-lint)
 - [stylelint](https://stylelint.io/)
 - [SwiftLint](https://realm.github.io/SwiftLint/)
 - [tflint](https://github.com/terraform-linters/tflint)
@@ -98,7 +101,7 @@ Look at the [configuration example](example/config.edn).
 
 ## License
 
-Copyright © 2020-2022 [Toshiki Takeuchi](https://totakke.net/)
+Copyright © 2020 [Toshiki Takeuchi](https://totakke.net/)
 
 This program and the accompanying materials are made available under the
 terms of the Eclipse Public License 2.0 which is available at
