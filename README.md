@@ -1,7 +1,7 @@
 # Bosslint
 
 [![build](https://github.com/totakke/bosslint/actions/workflows/build.yml/badge.svg)](https://github.com/totakke/bosslint/actions/workflows/build.yml)
-[![release](https://img.shields.io/badge/release-v0.4.0-blue.svg)](https://github.com/totakke/bosslint/releases/tag/0.3.0)
+[![release](https://img.shields.io/badge/release-v0.4.0-blue.svg)](https://github.com/totakke/bosslint/releases/tag/0.4.0)
 
 Meta linter for easily checking
 
@@ -18,8 +18,8 @@ Meta linter for easily checking
   - Mac OS - `macos`
   - Linux - `linux`
 - `arch`
-  - amd64 - `amd64`
-  - aarch64 - `aarch64`
+  - amd64 / x86_64  - `amd64`
+  - aarch64 / arm64  - `aarch64`
 
 ### Download & install
 
