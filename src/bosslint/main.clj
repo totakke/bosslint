@@ -85,13 +85,13 @@
   (binding [linter/*verbose?* (:verbose options)]
     (let [diff-files (enum-files ref1 ref2)
           file-group (group-by (comp path->type :git-path) diff-files)
-          enabled-linter? (if (:linter options)
-                            (comp (set (:linter options)) linter/name)
-                            (constantly true))
-          linters (filter enabled-linter? (list-linters))
           conf (if (:config options)
                  (config/load-config (:config options))
-                 (config/load-config))]
+                 (config/load-config))
+          enabled-linter? (if (:linter options)
+                            (comp (set (:linter options)) linter/name)
+                            #(not (:disabled? (get conf (keyword (name %))))))
+          linters (filter enabled-linter? (list-linters))]
       (when linter/*verbose?*
         (->> ["Enabled linters:"
               (desc-linters linters)

@@ -3,7 +3,8 @@
  :cljfmt {:version "0.6.4"
           :clojure {:command-options ["--indents" "/path/to/indentation.edn"]}}
 
- :eastwood {:version "0.3.7"}
+ :eastwood {:disabled? true
+            :version "0.3.7"}
 
  :dartanalyzer {:command-options ["--no-hints"]}
 
