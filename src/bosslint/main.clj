@@ -1,12 +1,11 @@
 (ns bosslint.main
   (:require [bosslint.config :as config]
+            [bosslint.git :as git]
             [bosslint.linter :as linter]
             (bosslint.linter checkstyle clj-kondo cljfmt dartanalyzer eastwood
                              flake8 hadolint jsonlint kubeval markdownlint
                              sql-lint stylelint swiftlint tflint yamllint)
-            [bosslint.util :as util]
             [clj-sub-command.core :as cmd]
-            [clojure.java.shell :as shell]
             [clojure.string :as string]
             [clojure.tools.cli :as cli]
             [io.aviso.ansi :as ansi])
@@ -16,32 +15,6 @@
 
 (defn- list-linters []
   (sort-by linter/name (descendants :bosslint/linter)))
-
-(defn- assert-command [command]
-  (when-not (util/command-exists? command)
-    (throw (ex-info (str "Command not found: " command) {}))))
-
-(defn git-diff
-  [ref1 ref2]
-  (assert-command "git")
-  (let [args (cond-> ["git" "diff" "--name-only" "--diff-filter=AMRTU"]
-               ref1 (conj ref1)
-               ref2 (conj ref2))]
-    (->> (apply shell/sh args)
-         :out
-         string/split-lines)))
-
-(defn git-ls-files []
-  (assert-command "git")
-  (->> (shell/sh "git" "ls-files" "--full-name")
-       :out
-       string/split-lines))
-
-(defn git-top-dir []
-  (assert-command "git")
-  (-> (shell/sh "git" "rev-parse" "--show-toplevel")
-      :out
-      string/trim-newline))
 
 (defn path->type [s]
   (condp re-find s
@@ -62,10 +35,14 @@
     :other))
 
 (defn enum-files [ref1 ref2]
-  (let [top-dir (git-top-dir)]
+  (let [[ref1* ref2*] (if ref2
+                        [ref1 ref2]
+                        [nil ref1])
+        repo (git/load-repo ".")
+        top-dir (git/top-dir repo)]
     (->> (if (= ref1 ":all")
-           (git-ls-files)
-           (git-diff ref1 ref2))
+           (git/ls-files repo)
+           (git/diff repo ref1* ref2*))
          (map (fn [s]
                 {:git-path s
                  :absolute-path (str top-dir "/" s)})))))
