@@ -3,7 +3,7 @@
 [![build](https://github.com/totakke/bosslint/actions/workflows/build.yml/badge.svg)](https://github.com/totakke/bosslint/actions/workflows/build.yml)
 [![release](https://img.shields.io/badge/release-v0.4.0-blue.svg)](https://github.com/totakke/bosslint/releases/tag/0.4.0)
 
-Meta linter for easily checking
+Multiple linters manager for easily checking
 
 > Good health is the most important thing. More than success, more than money,
 > more than power.
@@ -14,10 +14,10 @@ Meta linter for easily checking
 
 ### OS & arch
 
-- `os`
+- `os`:
   - Mac OS - `macos`
   - Linux - `linux`
-- `arch`
+- `arch`:
   - amd64 / x86_64  - `amd64`
   - aarch64 / arm64  - `aarch64`
 
@@ -46,6 +46,8 @@ $ mv bosslint [/your/PATH/dir/]
 
 ## Usage
 
+### Basics
+
 Bosslint collects changed files under Git version control and checks them with
 appropriate linters.
 
@@ -69,6 +71,9 @@ Use `:all` to check all files under a Git project.
 bosslint check :all
 ```
 
+Bosslint does not contain any linters themselves. You have to install the
+[supported linters](#supported-linters) preliminarily.
+
 ### Configuration
 
 Bosslint implicitly loads `~/.bosslint/config.edn` file.
@@ -83,21 +88,23 @@ Look at the [configuration example](example/config.edn).
 
 ### Supported Linters
 
-- [Checkstyle](https://checkstyle.org/)
-- [clj-kondo](https://github.com/borkdude/clj-kondo)
-- [cljfmt](https://github.com/weavejester/cljfmt)
-- [dartanalyzer](https://dart.dev/tools/dartanalyzer)
-- [Eastwood](https://github.com/jonase/eastwood)
-- [Flake8](https://flake8.pycqa.org/)
-- [hadolint](https://github.com/hadolint/hadolint)
-- [jsonlint](https://github.com/zaach/jsonlint)
-- [kubeval](https://www.kubeval.com/)
-- [markdownlint](https://github.com/igorshubovych/markdownlint-cli)
-- [sql-lint](https://github.com/joereynolds/sql-lint)
-- [stylelint](https://stylelint.io/)
-- [SwiftLint](https://realm.github.io/SwiftLint/)
-- [tflint](https://github.com/terraform-linters/tflint)
-- [yamllint](https://yamllint.readthedocs.io/)
+| Linter | Bosslint linter name |
+| ------ | -------------------- |
+| [Checkstyle](https://checkstyle.org/) | `checkstyle` |
+| [clj-kondo](https://github.com/borkdude/clj-kondo) | `clj-kondo` |
+| [cljfmt](https://github.com/weavejester/cljfmt) | `cljfmt` |
+| [dartanalyzer](https://dart.dev/tools/dartanalyzer) | `dartanalyzer` |
+| [Eastwood](https://github.com/jonase/eastwood) | `eastwood` |
+| [Flake8](https://flake8.pycqa.org/) | `flake8` |
+| [hadolint](https://github.com/hadolint/hadolint) | `hadolint` |
+| [jsonlint](https://github.com/zaach/jsonlint) | `jsonlint` |
+| [kubeval](https://www.kubeval.com/) | `kubeval` |
+| [markdownlint-cli](https://github.com/igorshubovych/markdownlint-cli) | `markdownlint` |
+| [sql-lint](https://github.com/joereynolds/sql-lint) | `sql-lint` |
+| [stylelint](https://stylelint.io/) | `stylelint` |
+| [SwiftLint](https://realm.github.io/SwiftLint/) | `swiftlint` |
+| [tflint](https://github.com/terraform-linters/tflint) | `tflint` |
+| [yamllint](https://yamllint.readthedocs.io/) | `yamllint` |
 
 ## License
 
