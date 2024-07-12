@@ -26,10 +26,11 @@
   (assert-command "git")
   (let [args (cond-> ["git" "diff" "--name-only" "--diff-filter=AMRTU"]
                ref1 (conj ref1)
-               ref2 (conj ref2))]
-    (->> (apply shell/sh args)
-         :out
-         string/split-lines)))
+               ref2 (conj ref2))
+        ret (apply shell/sh args)]
+    (if (zero? (:exit ret))
+      (string/split-lines (:out ret))
+      (throw (ex-info (:err ret) {:status (:exit ret)})))))
 
 (defn git-ls-files []
   (assert-command "git")
@@ -221,4 +222,4 @@
           :linters (linters-cmd arguments))
         (System/exit 0)
         (catch Exception e
-          (exit 1 (.getMessage e)))))))
+          (exit (:status (ex-data e) 1) (ex-message e)))))))
