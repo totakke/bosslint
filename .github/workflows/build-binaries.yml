@@ -10,22 +10,29 @@ jobs:
       matrix:
         os: [macos-latest, ubuntu-latest]
     steps:
-    - uses: actions/checkout@v3
-    - uses: graalvm/setup-graalvm@v1
+    - name: Checkout
+      uses: actions/checkout@v4
+
+    - name: Setup GraalVM
+      uses: graalvm/setup-graalvm@v1
       with:
+        java-version: '21'
+        distribution: 'graalvm-community'
         version: '22.3.0'
-        java-version: '17'
-        components: 'native-image'
+
     - name: Setup Clojure
-      uses: DeLaGuardo/setup-clojure@9.5
+      uses: DeLaGuardo/setup-clojure@12.5
       with:
-        cli: '1.11.1.1200'
+        cli: '1.12.0.1479'
+
     - name: Test
       run: clojure -X:test
+
     - name: Build
       run: clojure -M:native-image
+
     - name: Upload
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       with:
         name: bosslint-${{ matrix.os }}
         path: bosslint*
