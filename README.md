@@ -1,7 +1,7 @@
 # Bosslint
 
 [![build](https://github.com/totakke/bosslint/actions/workflows/build.yml/badge.svg)](https://github.com/totakke/bosslint/actions/workflows/build.yml)
-[![release](https://img.shields.io/badge/release-v0.4.0-blue.svg)](https://github.com/totakke/bosslint/releases/tag/0.4.0)
+[![release](https://img.shields.io/badge/release-v0.4.1-blue.svg)](https://github.com/totakke/bosslint/releases/tag/v0.4.1)
 
 Multiple linters manager for easily checking
 

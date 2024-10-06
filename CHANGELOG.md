@@ -1,5 +1,16 @@
 # Changelog
 
+## [0.4.1] - 2024-10-06
+
+### Added
+
+- Add `:disabled?` config. ([bdf5d1c](https://github.com/totakke/bosslint/commit/bdf5d1c))
+
+### Fixed
+
+- Return an error when unknown ref is supplied. ([37134e1](https://github.com/totakke/bosslint/commit/37134e1))
+- Fix cljfmt group. ([fac5ed0](https://github.com/totakke/bosslint/commit/fac5ed0))
+
 ## [0.4.0] - 2023-03-28
 
 ### Added
@@ -41,7 +52,8 @@
 
 First release.
 
-[Unreleased]: https://github.com/totakke/bosslint/compare/0.4.0...HEAD
+[Unreleased]: https://github.com/totakke/bosslint/compare/0.4.1...HEAD
+[0.4.1]: https://github.com/totakke/bosslint/compare/0.4.0...0.4.1
 [0.4.0]: https://github.com/totakke/bosslint/compare/0.3.0...0.4.0
 [0.3.0]: https://github.com/totakke/bosslint/compare/0.2.1...0.3.0
 [0.2.1]: https://github.com/totakke/bosslint/compare/0.2.0...0.2.1
