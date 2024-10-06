@@ -24,7 +24,7 @@ Multiple linters manager for easily checking
 ### Download & install
 
 ```sh
-curl -sSL https://github.com/totakke/bosslint/releases/download/0.4.0/bosslint_[os]_[arch] -o bosslint
+curl -sSL https://github.com/totakke/bosslint/releases/download/v0.4.1/bosslint_[os]_[arch] -o bosslint
 chmod +x bosslint
 mv bosslint [/your/PATH/dir/]
 ```
