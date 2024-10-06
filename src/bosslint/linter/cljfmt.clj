@@ -5,11 +5,14 @@
             [clojure.string :as string]
             [io.aviso.ansi :as ansi]))
 
+(def ^:private cljfmt-artifact "dev.weavejester/cljfmt")
+
 (defn- cljfmt-clojure
   [files conf]
   (let [version (or (:version conf) "RELEASE")
         args (concat ["clojure"
-                      "-Sdeps" (format "{:deps {cljfmt/cljfmt {:mvn/version \"%s\"}}}" version)
+                      "-Sdeps" (format "{:deps {%s {:mvn/version \"%s\"}}}"
+                                       cljfmt-artifact version)
                       "-M" "-m" "cljfmt.main" "check"]
                      (:command-options (:clojure conf))
                      (map :absolute-path files))
@@ -23,7 +26,8 @@
   [files conf]
   (let [version (or (:version conf) "RELEASE")
         args (concat ["lein"
-                      "update-in" ":plugins" "conj" (format "[lein-cljfmt \"%s\"]" version)
+                      "update-in" ":plugins" "conj" (format "[%s \"%s\"]"
+                                                            cljfmt-artifact version)
                       "--" "cljfmt" "check"]
                      (map :git-path files))
         ret (apply shell/sh args)]
