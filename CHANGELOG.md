@@ -1,5 +1,11 @@
 # Changelog
 
+## [Unreleased]
+
+### Changed
+
+-  Use `clojure.java.process` instead of `clojure.java.shell`. ([7b84acf](https://github.com/totakke/bosslint/commit/7b84acf))
+
 ## [0.4.1] - 2024-10-06
 
 ### Added
