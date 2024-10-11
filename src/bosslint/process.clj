@@ -12,9 +12,9 @@
 (defn command-exists?*
   [command]
   (try
-    (process/exec "command" "-v" command)
+    (process/exec command)
     true
-    (catch RuntimeException _
+    (catch java.io.IOException _
       false)))
 
 (def command-exists? (memoize command-exists?*))
