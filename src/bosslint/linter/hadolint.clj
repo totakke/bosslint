@@ -1,7 +1,6 @@
 (ns bosslint.linter.hadolint
   (:require [bosslint.linter :as linter :refer [deflinter]]
-            [clojure.java.shell :as shell]
-            [clojure.string :as string]))
+            [bosslint.process :as process]))
 
 (deflinter :linter/hadolint
   (name [] "hadolint")
@@ -11,5 +10,4 @@
 
   (lint [files _]
     (when (linter/check-command "hadolint")
-      (let [ret (apply shell/sh "hadolint" (map :absolute-path files))]
-        (println (string/trim-newline (:out ret)))))))
+      (apply process/run "hadolint" (map :absolute-path files)))))

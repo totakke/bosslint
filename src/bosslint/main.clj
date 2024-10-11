@@ -4,9 +4,9 @@
             (bosslint.linter checkstyle clj-kondo cljfmt dartanalyzer eastwood
                              flake8 hadolint jsonlint kubeval markdownlint
                              sql-lint stylelint swiftlint tflint yamllint)
-            [bosslint.util :as util]
+            [bosslint.process :as process]
             [clj-sub-command.core :as cmd]
-            [clojure.java.shell :as shell]
+            [clojure.java.process :as jprocess]
             [clojure.string :as string]
             [clojure.tools.cli :as cli]
             [io.aviso.ansi :as ansi])
@@ -18,7 +18,7 @@
   (sort-by linter/name (descendants :bosslint/linter)))
 
 (defn- assert-command [command]
-  (when-not (util/command-exists? command)
+  (when-not (process/command-exists? command)
     (throw (ex-info (str "Command not found: " command) {}))))
 
 (defn git-diff
@@ -27,21 +27,20 @@
   (let [args (cond-> ["git" "diff" "--name-only" "--diff-filter=AMRTU"]
                ref1 (conj ref1)
                ref2 (conj ref2))
-        ret (apply shell/sh args)]
-    (if (zero? (:exit ret))
-      (string/split-lines (:out ret))
-      (throw (ex-info (:err ret) {:status (:exit ret)})))))
+        proc (apply jprocess/start args)
+        exit @(jprocess/exit-ref proc)]
+    (if (zero? exit)
+      (string/split-lines (slurp (jprocess/stdout proc)))
+      (throw (ex-info (slurp (jprocess/stderr proc)) {:status exit})))))
 
 (defn git-ls-files []
   (assert-command "git")
-  (->> (shell/sh "git" "ls-files" "--full-name")
-       :out
+  (->> (jprocess/exec "git" "ls-files" "--full-name")
        string/split-lines))
 
 (defn git-top-dir []
   (assert-command "git")
-  (-> (shell/sh "git" "rev-parse" "--show-toplevel")
-      :out
+  (-> (jprocess/exec "git" "rev-parse" "--show-toplevel")
       string/trim-newline))
 
 (defn path->type [s]

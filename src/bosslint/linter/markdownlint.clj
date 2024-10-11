@@ -1,7 +1,6 @@
 (ns bosslint.linter.markdownlint
   (:require [bosslint.linter :as linter :refer [deflinter]]
-            [clojure.java.shell :as shell]
-            [clojure.string :as string]))
+            [bosslint.process :as process]))
 
 (deflinter :linter/markdownlint
   (name [] "markdownlint")
@@ -13,9 +12,5 @@
     (when (linter/check-command "markdownlint")
       (let [args (concat ["markdownlint"]
                          (:command-options conf)
-                         (map :absolute-path files))
-            ret (apply shell/sh args)]
-        (when-not (string/blank? (:out ret))
-          (println (string/trim-newline (:out ret))))
-        (when-not (string/blank? (:err ret))
-          (println (string/trim-newline (:err ret))))))))
+                         (map :absolute-path files))]
+        (apply process/run args)))))

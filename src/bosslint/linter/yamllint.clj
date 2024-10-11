@@ -1,7 +1,6 @@
 (ns bosslint.linter.yamllint
   (:require [bosslint.linter :as linter :refer [deflinter]]
-            [clojure.java.shell :as shell]
-            [clojure.string :as string]))
+            [bosslint.process :as process]))
 
 (deflinter :linter/yamllint
   (name [] "yamllint")
@@ -13,6 +12,5 @@
     (when (linter/check-command "yamllint")
       (let [args (concat ["yamllint"]
                          (:command-options conf)
-                         (map :absolute-path files))
-            ret (apply shell/sh args)]
-        (println (string/trim-newline (:out ret)))))))
+                         (map :absolute-path files))]
+        (apply process/run args)))))

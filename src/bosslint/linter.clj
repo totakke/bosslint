@@ -1,8 +1,8 @@
 (ns bosslint.linter
   (:refer-clojure :exclude [name])
-  (:require [bosslint.util :as util]
+  (:require [bosslint.process :as process]
             [clojure.edn :as edn]
-            [clojure.java.shell :as shell]
+            [clojure.java.process :as jprocess]
             [io.aviso.ansi :as ansi]))
 
 (def ^:dynamic *verbose?* false)
@@ -30,14 +30,21 @@
 
 (defn check-command
   [command]
-  (or (util/command-exists? command)
+  (or (process/command-exists? command)
       (println (ansi/yellow (str command " not found")))))
 
 (defn clojure-project? []
-  (let [{:keys [config-files]} (-> (shell/sh "clojure" "-Sdescribe")
-                                   :out
-                                   edn/read-string)]
-    (some? ((set config-files) "deps.edn"))))
+  (try
+    (let [{:keys [config-files]} (edn/read-string
+                                  (jprocess/exec {:err :discard}
+                                                 "clojure" "-Sdescribe"))]
+      (some? ((set config-files) "deps.edn")))
+    (catch RuntimeException _
+      false)))
 
 (defn leiningen-project? []
-  (zero? (:exit (shell/sh "lein" "deps" ":tree"))))
+  (try
+    (jprocess/exec {:err :discard} "lein" "deps" ":tree")
+    true
+    (catch RuntimeException _
+      false)))

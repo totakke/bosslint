@@ -1,8 +1,6 @@
 (ns bosslint.linter.cljfmt
   (:require [bosslint.linter :as linter :refer [deflinter]]
-            [bosslint.util :as util]
-            [clojure.java.shell :as shell]
-            [clojure.string :as string]
+            [bosslint.process :as process]
             [io.aviso.ansi :as ansi]))
 
 (def ^:private cljfmt-artifact "dev.weavejester/cljfmt")
@@ -15,12 +13,8 @@
                                        cljfmt-artifact version)
                       "-M" "-m" "cljfmt.main" "check"]
                      (:command-options (:clojure conf))
-                     (map :absolute-path files))
-        ret (apply shell/sh args)]
-    (when-not (string/blank? (:out ret))
-      (println (string/trim-newline (:out ret))))
-    (when-not (string/blank? (:err ret))
-      (println (string/trim-newline (:err ret))))))
+                     (map :absolute-path files))]
+    (apply process/run args)))
 
 (defn- cljfmt-lein
   [files conf]
@@ -29,12 +23,8 @@
                       "update-in" ":plugins" "conj" (format "[%s \"%s\"]"
                                                             cljfmt-artifact version)
                       "--" "cljfmt" "check"]
-                     (map :git-path files))
-        ret (apply shell/sh args)]
-    (when-not (string/blank? (:out ret))
-      (println (string/trim-newline (:out ret))))
-    (when-not (string/blank? (:err ret))
-      (println (string/trim-newline (:err ret))))))
+                     (map :git-path files))]
+    (apply process/run args)))
 
 (deflinter :linter/cljfmt
   (name [] "cljfmt")
@@ -45,10 +35,10 @@
   (lint [files conf]
     (if-let [f (cond
                  (and (linter/leiningen-project?)
-                      (util/command-exists? "lein"))
+                      (process/command-exists? "lein"))
                  cljfmt-lein
 
-                 (util/command-exists? "clojure")
+                 (process/command-exists? "clojure")
                  cljfmt-clojure)]
       (f files conf)
       (println (ansi/yellow "Command not found: clojure or lein")))))

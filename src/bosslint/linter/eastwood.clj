@@ -1,7 +1,6 @@
 (ns bosslint.linter.eastwood
   (:require [bosslint.linter :as linter :refer [deflinter]]
-            [bosslint.util :as util]
-            [clojure.java.shell :as shell]
+            [bosslint.process :as process]
             [clojure.string :as string]
             [io.aviso.ansi :as ansi]))
 
@@ -22,15 +21,14 @@
 
 (defn- eastwood-clojure
   [files conf]
-  (let [version (or (:version conf) "RELEASE")
-        ret (shell/sh "clojure"
-                      "-Sdeps" (format "{:deps {jonase/eastwood {:mvn/version \"%s\"}}}" version)
-                      "-m" "eastwood.lint"
-                      (->> (map :git-path files)
-                           (map path->ns)
-                           (string/join " ")
-                           (format "{:namespaces [%s]}")))]
-    (println (string/trim-newline (:out ret)))))
+  (let [version (or (:version conf) "RELEASE")]
+    (process/run "clojure"
+                 "-Sdeps" (format "{:deps {jonase/eastwood {:mvn/version \"%s\"}}}" version)
+                 "-M" "-m" "eastwood.lint"
+                 (->> (map :git-path files)
+                      (map path->ns)
+                      (string/join " ")
+                      (format "{:namespaces [%s]}")))))
 
 (defn- eastwood-lein
   [files conf]
@@ -41,9 +39,8 @@
               (->> (map :git-path files)
                    (map path->ns)
                    (string/join " ")
-                   (format "{:namespaces [%s]}"))]
-        ret (apply shell/sh args)]
-    (println (string/trim-newline (:out ret)))))
+                   (format "{:namespaces [%s]}"))]]
+    (apply process/run args)))
 
 (deflinter :linter/eastwood
   (name [] "eastwood")
@@ -55,11 +52,11 @@
 
   (lint [files conf]
     (if-let [f (cond
-                 (and (util/command-exists? "clojure")
+                 (and (process/command-exists? "clojure")
                       (linter/clojure-project?))
                  eastwood-clojure
 
-                 (and (util/command-exists? "lein")
+                 (and (process/command-exists? "lein")
                       (linter/leiningen-project?))
                  eastwood-lein)]
       (f files conf)

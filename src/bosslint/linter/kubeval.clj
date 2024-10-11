@@ -1,7 +1,7 @@
 (ns bosslint.linter.kubeval
   (:require [bosslint.linter :as linter :refer [deflinter]]
+            [bosslint.process :as process]
             [clj-yaml.core :as yaml]
-            [clojure.java.shell :as shell]
             [clojure.string :as string]))
 
 ;; kubectl api-resources
@@ -78,6 +78,5 @@
     (when (linter/check-command "kubeval")
       (let [args (concat ["kubeval"]
                          (:command-options conf)
-                         (map :absolute-path files))
-            ret (apply shell/sh args)]
-        (println (string/trim-newline (:out ret)))))))
+                         (map :absolute-path files))]
+        (apply process/run args)))))

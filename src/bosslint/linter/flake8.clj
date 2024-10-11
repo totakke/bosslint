@@ -1,7 +1,6 @@
 (ns bosslint.linter.flake8
   (:require [bosslint.linter :as linter :refer [deflinter]]
-            [clojure.java.shell :as shell]
-            [clojure.string :as string]))
+            [bosslint.process :as process]))
 
 (deflinter :linter/flake8
   (name [] "flake8")
@@ -13,6 +12,5 @@
     (when (linter/check-command "flake8")
       (let [args (concat ["flake8"]
                          (:command-options conf)
-                         (map :absolute-path files))
-            ret (apply shell/sh args)]
-        (println (string/trim-newline (:out ret)))))))
+                         (map :absolute-path files))]
+        (apply process/run args)))))
