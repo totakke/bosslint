@@ -1,5 +1,6 @@
 (ns bosslint.process
-  (:require [clojure.java.process :as process]))
+  (:require [clojure.java.process :as process])
+  (:import [java.util.concurrent TimeUnit]))
 
 (defn run
   [& args]
@@ -12,8 +13,9 @@
 (defn command-exists?*
   [command]
   (try
-    (process/exec command)
-    true
+    (let [proc (process/start command)]
+      (.waitFor proc 1000 TimeUnit/MILLISECONDS)
+      true)
     (catch java.io.IOException _
       false)))
 
