@@ -1,7 +1,6 @@
 (ns bosslint.linter.eastwood
   (:require [bosslint.linter :as linter :refer [deflinter]]
             [bosslint.process :as process]
-            [clojure.java.process :as jprocess]
             [clojure.string :as string]
             [io.aviso.ansi :as ansi]))
 
@@ -29,7 +28,7 @@
 
 (defn- clojure-project-aliases
   []
-  (->> (jprocess/exec "clojure" "-X:deps" "aliases")
+  (->> (process/exec "clojure" "-X:deps" "aliases")
        string/split-lines
        (map #(re-matches #"(:[-\w]+) \([-\w ,]*project[-\w ,]*\)" %))
        (remove nil?)

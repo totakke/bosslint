@@ -27,7 +27,7 @@
   (let [args (cond-> ["git" "diff" "--name-only" "--diff-filter=AMRTU"]
                ref1 (conj ref1)
                ref2 (conj ref2))
-        proc (apply jprocess/start args)
+        proc (apply process/start {:out :pipe, :err :pipe} args)
         exit @(jprocess/exit-ref proc)]
     (if (zero? exit)
       (string/split-lines (slurp (jprocess/stdout proc)))
@@ -35,12 +35,12 @@
 
 (defn git-ls-files []
   (assert-command "git")
-  (->> (jprocess/exec "git" "ls-files" "--full-name")
+  (->> (process/exec "git" "ls-files" "--full-name")
        string/split-lines))
 
 (defn git-top-dir []
   (assert-command "git")
-  (-> (jprocess/exec "git" "rev-parse" "--show-toplevel")
+  (-> (process/exec "git" "rev-parse" "--show-toplevel")
       string/trim-newline))
 
 (defn path->type [s]
@@ -82,7 +82,8 @@
 
 (defn run-check
   [ref1 ref2 options]
-  (binding [linter/*verbose?* (:verbose options)]
+  (binding [linter/*verbose?* (:verbose options)
+            process/*working-directory* (:directory options)]
     (let [diff-files (enum-files ref1 ref2)
           file-group (group-by (comp path->type :git-path) diff-files)
           conf (if (:config options)
@@ -129,6 +130,8 @@
 
 (def check-cmd-options
   [["-c" "--config CONFIG" "Specify a configuration file (default: $HOME/.bosslint/config.edn)"]
+   ["-C" "--directory DIR" "Specify an alternate working directory (default: .)"
+    :default "."]
    ["-l" "--linter LINTER" "Select linter"
     :assoc-fn (fn [m k v] (update m k #(conj (or % []) v)))
     :validate [(set (map name (list-linters)))]]

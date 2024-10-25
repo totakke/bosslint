@@ -2,13 +2,31 @@
   (:require [clojure.java.process :as process])
   (:import [java.util.concurrent TimeUnit]))
 
+(def ^:dynamic *working-directory* ".")
+
+(defn start
+  [& opts+args]
+  (let [[opts command] (if (map? (first opts+args))
+                         [(first opts+args) (rest opts+args)]
+                         [{} opts+args])
+        opts (merge {:out :inherit
+                     :err :inherit
+                     :dir *working-directory*}
+                    opts)]
+    (apply process/start opts command)))
+
 (defn run
-  [& args]
-  (let [proc (apply process/start
-                    {:out :inherit
-                     :err :inherit}
-                    args)]
+  [& opts+args]
+  (let [proc (apply start opts+args)]
     @(process/exit-ref proc)))
+
+(defn exec
+  [& opts+args]
+  (let [[opts command] (if (map? (first opts+args))
+                         [(first opts+args) (rest opts+args)]
+                         [{} opts+args])
+        opts (merge {:dir *working-directory*} opts)]
+    (apply process/exec opts command)))
 
 (defn command-exists?*
   [command]

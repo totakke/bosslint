@@ -2,7 +2,6 @@
   (:refer-clojure :exclude [name])
   (:require [bosslint.process :as process]
             [clojure.edn :as edn]
-            [clojure.java.process :as jprocess]
             [io.aviso.ansi :as ansi]))
 
 (def ^:dynamic *verbose?* false)
@@ -36,15 +35,15 @@
 (defn clojure-project? []
   (try
     (let [{:keys [config-files]} (edn/read-string
-                                  (jprocess/exec {:err :discard}
-                                                 "clojure" "-Sdescribe"))]
+                                  (process/exec {:err :discard}
+                                                "clojure" "-Sdescribe"))]
       (some? ((set config-files) "deps.edn")))
     (catch RuntimeException _
       false)))
 
 (defn leiningen-project? []
   (try
-    (jprocess/exec {:err :discard} "lein" "deps" ":tree")
+    (process/exec {:err :discard} "lein" "deps" ":tree")
     true
     (catch RuntimeException _
       false)))
