@@ -1,7 +1,9 @@
 (ns bosslint.linter.eastwood
   (:require [bosslint.linter :as linter :refer [deflinter]]
             [bosslint.process :as process]
+            [clojure.java.io :as io]
             [clojure.string :as string]
+            [clojure.tools.deps :as deps]
             [io.aviso.ansi :as ansi]))
 
 (def ^:private excludes
@@ -26,13 +28,13 @@
        (string/join " ")
        (format "{:namespaces [%s]}")))
 
-(defn- clojure-project-aliases
+(defn- aliases-with-extra-paths
   []
-  (->> (process/exec "clojure" "-X:deps" "aliases")
-       string/split-lines
-       (map #(re-matches #"(:[-\w]+) \([-\w ,]*project[-\w ,]*\)" %))
-       (remove nil?)
-       (map second)))
+  (->> (deps/slurp-deps (io/file "deps.edn"))
+       :aliases
+       (filter #(contains? (second %) :extra-paths))
+       keys
+       (map str)))
 
 (defn- clojure-sdeps
   [eastwood-version]
@@ -45,7 +47,7 @@
 (defn- eastwood-clojure
   [files conf]
   (let [version (or (:version conf) "RELEASE")
-        aliases (concat (clojure-project-aliases) [":eastwood"])]
+        aliases (concat (aliases-with-extra-paths) [":eastwood"])]
     (process/run "clojure"
                  "-Sdeps" (clojure-sdeps version)
                  (str "-M" (string/join aliases))
