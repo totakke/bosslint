@@ -1,12 +1,12 @@
 (ns bosslint.main
   (:require [bosslint.config :as config]
+            [bosslint.git :as git]
             [bosslint.linter :as linter]
             (bosslint.linter checkstyle clj-kondo cljfmt dartanalyzer eastwood
                              flake8 hadolint jsonlint kubeval markdownlint
                              sql-lint stylelint swiftlint tflint yamllint)
             [bosslint.process :as process]
             [clj-sub-command.core :as cmd]
-            [clojure.java.process :as jprocess]
             [clojure.string :as string]
             [clojure.tools.cli :as cli]
             [io.aviso.ansi :as ansi])
@@ -16,32 +16,6 @@
 
 (defn- list-linters []
   (sort-by linter/name (descendants :bosslint/linter)))
-
-(defn- assert-command [command]
-  (when-not (process/command-exists? command)
-    (throw (ex-info (str "Command not found: " command) {}))))
-
-(defn git-diff
-  [ref1 ref2]
-  (assert-command "git")
-  (let [args (cond-> ["git" "diff" "--name-only" "--diff-filter=AMRTU"]
-               ref1 (conj ref1)
-               ref2 (conj ref2))
-        proc (apply process/start {:out :pipe, :err :pipe} args)
-        exit @(jprocess/exit-ref proc)]
-    (if (zero? exit)
-      (string/split-lines (slurp (jprocess/stdout proc)))
-      (throw (ex-info (slurp (jprocess/stderr proc)) {:status exit})))))
-
-(defn git-ls-files []
-  (assert-command "git")
-  (->> (process/exec "git" "ls-files" "--full-name")
-       string/split-lines))
-
-(defn git-top-dir []
-  (assert-command "git")
-  (-> (process/exec "git" "rev-parse" "--show-toplevel")
-      string/trim-newline))
 
 (defn path->type [s]
   (condp re-find s
@@ -62,10 +36,10 @@
     :other))
 
 (defn enum-files [ref1 ref2]
-  (let [top-dir (git-top-dir)]
+  (let [top-dir (git/top-dir)]
     (->> (if (= ref1 ":all")
-           (git-ls-files)
-           (git-diff ref1 ref2))
+           (git/ls-files)
+           (git/diff ref1 ref2))
          (map (fn [s]
                 {:git-path s
                  :absolute-path (str top-dir "/" s)})))))

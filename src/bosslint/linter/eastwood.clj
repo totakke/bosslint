@@ -1,5 +1,6 @@
 (ns bosslint.linter.eastwood
-  (:require [bosslint.linter :as linter :refer [deflinter]]
+  (:require [bosslint.git :as git]
+            [bosslint.linter :as linter :refer [deflinter]]
             [bosslint.process :as process]
             [clojure.java.io :as io]
             [clojure.string :as string]
@@ -29,8 +30,8 @@
        (format "{:namespaces [%s]}")))
 
 (defn- aliases-with-extra-paths
-  []
-  (->> (deps/slurp-deps (io/file "deps.edn"))
+  [dir]
+  (->> (deps/slurp-deps (io/file dir "deps.edn"))
        :aliases
        (filter #(contains? (second %) :extra-paths))
        keys
@@ -45,9 +46,9 @@
           eastwood-version))
 
 (defn- eastwood-clojure
-  [files conf]
+  [files conf dir]
   (let [version (or (:version conf) "RELEASE")
-        aliases (concat (aliases-with-extra-paths) [":eastwood"])]
+        aliases (concat (aliases-with-extra-paths dir) [":eastwood"])]
     (process/run "clojure"
                  "-Sdeps" (clojure-sdeps version)
                  (str "-M" (string/join aliases))
@@ -71,13 +72,15 @@
                    (some #(re-find % git-path) excludes)))))
 
   (lint [files conf]
-    (if-let [f (cond
-                 (and (process/command-exists? "clojure")
-                      (linter/clojure-project?))
-                 eastwood-clojure
+    (let [top-dir (git/top-dir)]
+      (binding [process/*working-directory* top-dir]
+        (if-let [f (cond
+                     (and (process/command-exists? "clojure")
+                          (linter/clojure-project?))
+                     #(eastwood-clojure %1 %2 top-dir)
 
-                 (and (process/command-exists? "lein")
-                      (linter/leiningen-project?))
-                 eastwood-lein)]
-      (f files conf)
-      (println (ansi/yellow "Command not found: clojure or lein")))))
+                     (and (process/command-exists? "lein")
+                          (linter/leiningen-project?))
+                     eastwood-lein)]
+          (f files conf)
+          (println (ansi/yellow "Command not found: clojure or lein")))))))
