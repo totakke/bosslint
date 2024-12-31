@@ -10,4 +10,7 @@
 
   (lint [files _]
     (when (linter/check-command "clj-kondo")
-      (apply process/run "clj-kondo" "--lint" (map :absolute-path files)))))
+      (case (apply process/run "clj-kondo" "--lint" (map :absolute-path files))
+        0 :success
+        2 :warning
+        :error))))

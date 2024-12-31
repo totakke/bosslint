@@ -49,10 +49,12 @@
   [files conf dir]
   (let [version (or (:version conf) "RELEASE")
         aliases (concat (aliases-with-extra-paths dir) [":eastwood"])]
-    (process/run "clojure"
-                 "-Sdeps" (clojure-sdeps version)
-                 (str "-M" (string/join aliases))
-                 (eastwood-options files))))
+    (if (zero? (process/run "clojure"
+                            "-Sdeps" (clojure-sdeps version)
+                            (str "-M" (string/join aliases))
+                            (eastwood-options files)))
+      :success
+      :error)))
 
 (defn- eastwood-lein
   [files conf]
@@ -61,7 +63,9 @@
               "update-in" ":plugins" "conj" (format "[jonase/eastwood \"%s\"]" version)
               "--" "eastwood"
               (eastwood-options files)]]
-    (apply process/run args)))
+    (if (zero? (apply process/run args))
+      :success
+      :error)))
 
 (deflinter :linter/eastwood
   (name [] "eastwood")

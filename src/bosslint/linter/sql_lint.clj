@@ -14,4 +14,6 @@
         (let [args (concat ["sql-lint"]
                            (:command-options conf)
                            [(:absolute-path file)])]
-          (apply process/run args))))))
+          (if (zero? (apply process/run args))
+            :success
+            :error))))))

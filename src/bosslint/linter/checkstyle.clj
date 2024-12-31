@@ -13,4 +13,6 @@
       (let [args (concat ["checkstyle"]
                          (:command-options conf)
                          (map :absolute-path files))]
-        (apply process/run args)))))
+        (if (zero? (apply process/run args))
+          :success
+          :error)))))

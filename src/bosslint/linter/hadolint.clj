@@ -10,4 +10,6 @@
 
   (lint [files _]
     (when (linter/check-command "hadolint")
-      (apply process/run "hadolint" (map :absolute-path files)))))
+      (if (zero? (apply process/run "hadolint" (map :absolute-path files)))
+        :success
+        :error))))

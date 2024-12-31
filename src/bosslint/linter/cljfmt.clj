@@ -14,7 +14,10 @@
                       "-M" "-m" "cljfmt.main" "check"]
                      (:command-options (:clojure conf))
                      (map :absolute-path files))]
-    (apply process/run args)))
+    (case (apply process/run args)
+      0 :success
+      1 :warning
+      :error)))
 
 (defn- cljfmt-lein
   [files conf]
@@ -24,7 +27,10 @@
                                                             cljfmt-artifact version)
                       "--" "cljfmt" "check"]
                      (map :git-path files))]
-    (apply process/run args)))
+    (case (apply process/run args)
+      0 :success
+      1 :warning
+      :error)))
 
 (deflinter :linter/cljfmt
   (name [] "cljfmt")

@@ -66,7 +66,8 @@
           enabled-linter? (if (:linter options)
                             (comp (set (:linter options)) linter/name)
                             #(not (:disabled? (get conf (keyword (name %))))))
-          linters (filter enabled-linter? (list-linters))]
+          linters (filter enabled-linter? (list-linters))
+          statuses (atom #{})]
       (when linter/*verbose?*
         (->> ["Enabled linters:"
               (desc-linters linters)
@@ -76,6 +77,7 @@
              (string/join \newline)
              ansi/cyan
              println))
+
       (doseq [key linters]
         (if-let [files (seq (linter/files key file-group))]
           (do (println (str (ansi/green (linter/name key)) ":"))
@@ -85,19 +87,30 @@
                      (string/join \newline)
                      ansi/cyan
                      println))
-              (linter/lint key files (get conf (keyword (name key))))
+              (let [status (linter/lint key files (get conf (keyword (name key))))]
+                (swap! statuses conj status)
+                (case status
+                  :success (println (ansi/cyan "==>") "Success ✅")
+                  :warning (println (ansi/cyan "==>") "Warning ⚠️")
+                  :error (println (ansi/cyan "==>") "Error ❌")
+                  nil))
               (newline))
           (when linter/*verbose?*
             (println (str (ansi/green (linter/name key)) ":"))
             (println (ansi/cyan "No files"))
-            (newline)))))))
+            (newline))))
+
+      (condp #(get %2 %1) @statuses
+        :error (throw (ex-info nil {:status 1}))
+        :warning (throw (ex-info nil {:status 2}))
+        nil))))
 
 (defn error-msg [errors]
   (str "The following errors occurred while parsing your command:\n\n"
        (string/join \newline errors)))
 
 (defn exit [status msg]
-  (println msg)
+  (when msg (println msg))
   (System/exit status))
 
 ;;; check

@@ -12,4 +12,6 @@
     (when (linter/check-command "swiftlint")
       (let [args (concat ["swiftlint" "lint"]
                          (map :absolute-path files))]
-        (apply process/run args)))))
+        (if (zero? (apply process/run args))
+          :success
+          :error)))))

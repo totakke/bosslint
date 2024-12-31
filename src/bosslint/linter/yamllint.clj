@@ -13,4 +13,7 @@
       (let [args (concat ["yamllint"]
                          (:command-options conf)
                          (map :absolute-path files))]
-        (apply process/run args)))))
+        (case (apply process/run args)
+          0 :success
+          2 :warning
+          :error)))))
