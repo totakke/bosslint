@@ -2,9 +2,20 @@
 
 ## [Unreleased]
 
+### Added
+
+- Add an option `-C/--directory` to change working directory. ([1d5c123](https://github.com/totakke/bosslint/commit/1d5c123))
+- Consider exit codes of linter executions. ([145810f](https://github.com/totakke/bosslint/commit/145810f))
+
 ### Changed
 
 - Use `clojure.java.process` instead of `clojure.java.shell`. ([7b84acf](https://github.com/totakke/bosslint/commit/7b84acf))
+
+### Fixed
+
+- Fix clojure aliases on eastwood run. ([4750a14](https://github.com/totakke/bosslint/commit/4750a14))
+- eastwood: use only aliases having :extra-paths. ([5d12519](https://github.com/totakke/bosslint/commit/5d12519))
+- eastwood: fix run in a subdirectory. ([e216feb](https://github.com/totakke/bosslint/commit/e216feb))
 
 ## [0.4.1] - 2024-10-06
 
