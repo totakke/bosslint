@@ -1,7 +1,7 @@
 # Bosslint
 
 [![build](https://github.com/totakke/bosslint/actions/workflows/build.yml/badge.svg)](https://github.com/totakke/bosslint/actions/workflows/build.yml)
-[![release](https://img.shields.io/badge/release-v0.4.1-blue.svg)](https://github.com/totakke/bosslint/releases/tag/v0.4.1)
+[![release](https://img.shields.io/badge/release-v0.5.0-blue.svg)](https://github.com/totakke/bosslint/releases/tag/v0.5.0)
 
 Multiple linters manager for easily checking
 
@@ -24,7 +24,7 @@ Multiple linters manager for easily checking
 ### Download & install
 
 ```sh
-curl -sSL https://github.com/totakke/bosslint/releases/download/v0.4.1/bosslint_[os]_[arch] -o bosslint
+curl -sSL https://github.com/totakke/bosslint/releases/download/v0.5.0/bosslint_[os]_[arch] -o bosslint
 chmod +x bosslint
 mv bosslint [/your/PATH/dir/]
 ```
@@ -55,14 +55,17 @@ appropriate linters.
 $ bosslint check HEAD~1
 clj-kondo:
 linting took 281ms, errors: 0, warnings: 0
+==> Success ✅
 
 cljfmt:
 All source files formatted correctly
+==> Success ✅
 
 eastwood:
 ...
 == Linting done in 1887 ms ==
 == Warnings: 0 (not including reflection warnings)  Exceptions thrown: 0
+==> Success ✅
 ```
 
 Use `:all` to check all files under a Git project.
