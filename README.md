@@ -3,7 +3,7 @@
 [![build](https://github.com/totakke/bosslint/actions/workflows/build.yml/badge.svg)](https://github.com/totakke/bosslint/actions/workflows/build.yml)
 [![release](https://img.shields.io/badge/release-v0.5.0-blue.svg)](https://github.com/totakke/bosslint/releases/tag/v0.5.0)
 
-Multiple linters manager for easily checking
+One command to run multiple linters under Git version control
 
 > Good health is the most important thing. More than success, more than money,
 > more than power.
@@ -12,7 +12,15 @@ Multiple linters manager for easily checking
 
 ## Installation
 
-### OS & arch
+### Brew (MacOS and Linux)
+
+```sh
+brew install totakke/tap/bosslint
+```
+
+### Manual install
+
+OS & arch:
 
 - `os`:
   - Mac OS - `macos`
@@ -21,7 +29,7 @@ Multiple linters manager for easily checking
   - amd64 / x86_64  - `amd64`
   - aarch64 / arm64  - `aarch64`
 
-### Download & install
+Download & install:
 
 ```sh
 curl -sSL https://github.com/totakke/bosslint/releases/download/v0.5.0/bosslint_[os]_[arch] -o bosslint
