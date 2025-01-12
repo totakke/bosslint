@@ -2,9 +2,10 @@
   (:require [bosslint.config :as config]
             [bosslint.git :as git]
             [bosslint.linter :as linter]
-            (bosslint.linter checkstyle clj-kondo cljfmt dartanalyzer eastwood
-                             flake8 hadolint jsonlint kubeval markdownlint
-                             sql-lint stylelint swiftlint tflint yamllint)
+            (bosslint.linter checkstyle clj-kondo cljfmt cljstyle dartanalyzer
+                             eastwood flake8 hadolint jsonlint kubeval
+                             markdownlint sql-lint stylelint swiftlint tflint
+                             yamllint)
             [bosslint.process :as process]
             [clj-sub-command.core :as cmd]
             [clojure.string :as string]
@@ -113,7 +114,7 @@
   (when msg (println msg))
   (System/exit status))
 
-;;; check
+;; check
 
 (def check-cmd-options
   [["-c" "--config CONFIG" "Specify a configuration file (default: $HOME/.bosslint/config.edn)"]
@@ -156,13 +157,13 @@
       (exit (if ok? 0 1) exit-message)
       (run-check ref1 ref2 options))))
 
-;;; linters
+;; linters
 
 (defn linters-cmd [_]
   (doseq [s (map linter/name (list-linters))]
     (println s)))
 
-;;; main
+;; main
 
 (def options
   [["-h" "--help" "Print help"]
