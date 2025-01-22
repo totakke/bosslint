@@ -14,6 +14,7 @@
                              jsonlint
                              kubeval
                              markdownlint
+                             shellcheck
                              sql-lint
                              stylelint
                              swiftlint
@@ -29,7 +30,7 @@
 (def version "0.5.1-SNAPSHOT")
 
 (defn- list-linters []
-  (sort-by linter/name (descendants :bosslint/linter)))
+  (sort-by name (descendants :bosslint/linter)))
 
 (def ^:private path-type-pairs
   {#"\.clj$" :clj
@@ -42,6 +43,7 @@
    #"\.(md|markdown)$" :markdown
    #"\.py$" :python
    #"\.s[ac]ss$" :sass
+   #"\.sh$" :shell
    #"\.sql$" :sql
    #"\.swift$" :swift
    #"\.tf$" :terraform
@@ -88,7 +90,7 @@
                  (config/load-config (:config options))
                  (config/load-config))
           enabled-linter? (if (:linter options)
-                            (comp (set (:linter options)) linter/name)
+                            (comp (set (:linter options)) name)
                             #(not (:disabled? (get conf (keyword (name %))))))
           linters (filter enabled-linter? (list-linters))
           statuses (atom #{})]
