@@ -68,7 +68,7 @@
       :error)))
 
 (deflinter :linter/eastwood
-  (name [] "eastwood")
+  (name [] "Eastwood")
 
   (files [file-group]
     (->> (linter/select-files file-group [:clj :cljc])

@@ -3,7 +3,7 @@
             [bosslint.process :as process]))
 
 (deflinter :linter/checkstyle
-  (name [] "checkstyle")
+  (name [] "Checkstyle")
 
   (files [file-group]
     (linter/select-files file-group [:java]))

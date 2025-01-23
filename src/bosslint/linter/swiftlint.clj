@@ -3,7 +3,7 @@
             [bosslint.process :as process]))
 
 (deflinter :linter/swiftlint
-  (name [] "swiftlint")
+  (name [] "Swiftlint")
 
   (files [file-group]
     (linter/select-files file-group [:swift]))

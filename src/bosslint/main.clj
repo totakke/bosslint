@@ -185,8 +185,8 @@
 ;; linters
 
 (defn linters-cmd [_]
-  (doseq [s (map linter/name (list-linters))]
-    (println s)))
+  (doseq [k (list-linters)]
+    (println (str (linter/name k) " (" (name k) ")"))))
 
 ;; main
 

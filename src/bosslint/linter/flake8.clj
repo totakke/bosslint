@@ -3,7 +3,7 @@
             [bosslint.process :as process]))
 
 (deflinter :linter/flake8
-  (name [] "flake8")
+  (name [] "Flake8")
 
   (files [file-group]
     (linter/select-files file-group [:python]))

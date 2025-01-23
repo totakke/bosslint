@@ -3,7 +3,7 @@
             [bosslint.process :as process]))
 
 (deflinter :linter/markdownlint
-  (name [] "markdownlint")
+  (name [] "markdownlint-cli")
 
   (files [file-group]
     (linter/select-files file-group [:markdown]))
