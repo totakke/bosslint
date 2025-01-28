@@ -146,8 +146,12 @@
    ["-C" "--directory DIR" "Specify an alternate working directory (default: .)"
     :default "."]
    ["-l" "--linter LINTER" "Select linter"
-    :assoc-fn (fn [m k v] (update m k #(conj (or % []) v)))
-    :validate [(set (map name (list-linters)))]]
+    :assoc-fn (let [name-map (into {} (map (juxt linter/name name)
+                                           (list-linters)))]
+                (fn [m k v]
+                  (update m k #(conj (or % []) (name-map v v)))))
+    :validate [(set (mapcat (juxt name linter/name) (list-linters)))
+               "Unsupported linter"]]
    ["-v" "--verbose" "Make bosslint verbose during the operation"]
    ["-h" "--help" "Print help"]])
 
