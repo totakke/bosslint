@@ -1,5 +1,19 @@
 # Changelog
 
+## [Unreleased]
+
+### Added
+
+- Add shellcheck linter. ([c3dfd4d](https://github.com/totakke/bosslint/commit/c3dfd4d))
+- Add actionlint linter ([a38293e](https://github.com/totakke/bosslint/commit/a38293e))
+- Add cljstyle linter ([e3ca7bb](https://github.com/totakke/bosslint/commit/e3ca7bb))
+
+### Changed
+
+- Print official linter names. ([c8da9d0](https://github.com/totakke/bosslint/commit/c8da9d0))
+- Allow both a linter key and a linter name for `-l` option. ([9a24621](https://github.com/totakke/bosslint/commit/9a24621))
+- Add `$XDG_CONFIG_HOME/bosslint/config.edn` to config candidates. ([2f0c35f](https://github.com/totakke/bosslint/commit/2f0c35f))
+
 ## [0.5.0] - 2025-01-06
 
 ### Added
