@@ -142,8 +142,8 @@
 ;; check
 
 (def check-cmd-options
-  [["-c" "--config CONFIG" "Specify a configuration file (default: $HOME/.bosslint/config.edn)"]
-   ["-C" "--directory DIR" "Specify an alternate working directory (default: .)"
+  [["-c" "--config CONFIG" "Specify a configuration file"]
+   ["-C" "--directory DIR" "Specify an alternate working directory"
     :default "."]
    ["-l" "--linter LINTER" "Select linter"
     :assoc-fn (let [name-map (into {} (map (juxt linter/name name)
