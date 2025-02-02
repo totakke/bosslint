@@ -153,7 +153,7 @@
     :validate [(set (mapcat (juxt name linter/name) (list-linters)))
                "Unsupported linter"]]
    ["-v" "--verbose" "Make bosslint verbose during the operation"]
-   ["-h" "--help" "Print help"]])
+   ["-h" "--help" "Print this help and exit"]])
 
 (defn check-cmd-usage [options-summary]
   (->> ["Usage: bosslint check [<options>] [<commit> [<commit>]]"
@@ -195,21 +195,25 @@
 ;; main
 
 (def options
-  [["-h" "--help" "Print help"]
-   [nil "--version" "Print version"]])
+  [["-h" "--help" "Print this help and exit"]
+   [nil "--version" "Print the version and exit"]])
 
 (def commands
   [["check" "Check files"]
    ["linters" "Show linters"]])
 
 (defn usage [options-summary commands-summary]
-  (->> ["Usage: bosslint [--help] [--version] <command> [<args>]"
+  (->> [(str "bosslint v" version)
+        ""
+        "Usage: bosslint [--help] [--version] <command> [<args>]"
         ""
         "Options:"
         options-summary
         ""
         "Commands:"
-        commands-summary]
+        commands-summary
+        ""
+        "For more info, see https://github.com/totakke/bosslint#usage"]
        (string/join \newline)))
 
 (defn validate-args [args]
