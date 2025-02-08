@@ -9,6 +9,10 @@ One command to run multiple linters under Git version control
 >
 > &mdash; Hyman Roth / The Godfather Part II
 
+## Preview
+
+https://github.com/user-attachments/assets/addd6a48-93a9-4748-b932-c1b952ef90bf
+
 ## Installation
 
 ### Brew (MacOS and Linux)
