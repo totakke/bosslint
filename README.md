@@ -1,7 +1,6 @@
 # Bosslint
 
 [![build](https://github.com/totakke/bosslint/actions/workflows/build.yml/badge.svg)](https://github.com/totakke/bosslint/actions/workflows/build.yml)
-[![release](https://img.shields.io/badge/release-v0.5.0-blue.svg)](https://github.com/totakke/bosslint/releases/tag/v0.5.0)
 
 One command to run multiple linters under Git version control
 
@@ -32,7 +31,7 @@ OS & arch:
 Download & install:
 
 ```sh
-curl -sSL https://github.com/totakke/bosslint/releases/download/v0.5.0/bosslint_[os]_[arch] -o bosslint
+curl -sSL https://github.com/totakke/bosslint/releases/download/v0.6.0/bosslint_[os]_[arch] -o bosslint
 chmod +x bosslint
 mv bosslint [/your/PATH/dir/]
 ```
@@ -56,11 +55,12 @@ $ mv bosslint [/your/PATH/dir/]
 
 ### Basics
 
-Bosslint collects changed files under Git version control and checks them with
-appropriate linters.
+`bosslint check` command checks changed files between commits, commit and
+working tree, etc. with appropriate linters. Arguments of the ref are similar to
+[`git-diff`](https://git-scm.com/docs/git-diff) arguments.
 
 ```console
-$ bosslint check HEAD~1
+$ bosslint check HEAD master
 clj-kondo:
 linting took 281ms, errors: 0, warnings: 0
 ==> Success ✅
@@ -76,34 +76,26 @@ eastwood:
 ==> Success ✅
 ```
 
-Use `:all` to check all files under a Git project.
+You can use `:all` to check all files under a Git project.
 
 ```sh
 bosslint check :all
 ```
 
-Bosslint does not contain any linters themselves. You have to install the
-[supported linters](#supported-linters) preliminarily.
-
-### Configuration
-
-Bosslint implicitly loads `~/.bosslint/config.edn` file.
-
-Alternatively, you can specify a configuration file with `--config` option.
-
-```sh
-bosslint check --config [/path/to/config.edn] master
-```
-
-Look at the [configuration example](example/config.edn).
+Bosslint just dispatches each linter but does not contain any linters
+themselves. You must install each linter preliminarily. Supported linters are
+shown by `bosslint linters` command or are found in
+[Supported Linters](#supported-linters) section.
 
 ### Supported Linters
 
 | Linter | Bosslint linter name |
 | ------ | -------------------- |
+| [actionlint](https://rhysd.github.io/actionlint/) | `actionlint` |
 | [Checkstyle](https://checkstyle.org/) | `checkstyle` |
 | [clj-kondo](https://github.com/borkdude/clj-kondo) | `clj-kondo` |
 | [cljfmt](https://github.com/weavejester/cljfmt) | `cljfmt` |
+| [cljstyle](https://github.com/greglook/cljstyle) | `cljstyle` |
 | [dartanalyzer](https://dart.dev/tools/dartanalyzer) | `dartanalyzer` |
 | [Eastwood](https://github.com/jonase/eastwood) | `eastwood` |
 | [Flake8](https://flake8.pycqa.org/) | `flake8` |
@@ -111,11 +103,45 @@ Look at the [configuration example](example/config.edn).
 | [jsonlint](https://github.com/zaach/jsonlint) | `jsonlint` |
 | [kubeval](https://www.kubeval.com/) | `kubeval` |
 | [markdownlint-cli](https://github.com/igorshubovych/markdownlint-cli) | `markdownlint` |
+| [ShellCheck](https://www.shellcheck.net/) | `shellcheck` |
 | [sql-lint](https://github.com/joereynolds/sql-lint) | `sql-lint` |
 | [stylelint](https://stylelint.io/) | `stylelint` |
 | [SwiftLint](https://realm.github.io/SwiftLint/) | `swiftlint` |
 | [tflint](https://github.com/terraform-linters/tflint) | `tflint` |
 | [yamllint](https://yamllint.readthedocs.io/) | `yamllint` |
+
+### Configuration
+
+Bosslint implicitly finds and loads a configuration file in the following order.
+
+1. `$XDG_CONFIG_HOME/bosslint/config.edn`
+2. `$HOME/.config/bosslint/config.edn`
+3. `$HOME/.bosslint/config.edn`
+
+Alternatively, you can specify a configuration file with `--config` option.
+
+```sh
+bosslint check --config path/to/config.edn ref1 ref2
+```
+
+The configuration file must be written in Extensible Data Notation (EDN) format.
+
+```clojure
+{:clj-kondo
+ {:disabled? false}
+
+ :cljfmt
+ {:version "0.6.4"
+  :clojure {:command-options ["--indents" "/path/to/indentation.edn"]}}
+
+ :eastwood
+ {:disabled? true
+  :version "0.3.7"}}
+```
+
+The configuration file has a single map including linter keys and config vals.
+All linter config supports `:disabled?` option (default `false`). For specific
+options to a linter, look at the [configuration example](example/config.edn).
 
 ## License
 
