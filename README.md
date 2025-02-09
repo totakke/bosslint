@@ -147,6 +147,15 @@ The configuration file has a single map including linter keys and config vals.
 All linter config supports `:disabled?` option (default `false`). For specific
 options to a linter, look at the [configuration example](example/config.edn).
 
+### Exit codes
+
+Exit codes of `bosslint check` command are based on the results of all executed
+linters.
+
+- `0`: no linters output errors and warnings
+- `1`: one or more linters output errors, or an error occurs in main Bosslint process
+- `2`: one or more linters output warnings
+
 ## License
 
 Copyright © 2020 [Toshiki Takeuchi](https://totakke.net/)
