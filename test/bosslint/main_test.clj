@@ -7,6 +7,7 @@
     "path/to/foo.clj"           #{:clj}
     "path/to/foo.cljc"          #{:cljc}
     "path/to/foo.cljs"          #{:cljs}
+    "path/to/foo.css"           #{:css}
     "path/to/foo.dart"          #{:dart}
     "path/to/Dockerfile"        #{:docker}
     "path/to/Dockerfile.dev"    #{:docker}

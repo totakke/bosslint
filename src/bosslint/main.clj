@@ -40,6 +40,7 @@
   {#"\.clj$" :clj
    #"\.cljc$" :cljc
    #"\.cljs$" :cljs
+   #"\.css$" :css
    #"\.dart$" :dart
    #"Dockerfile(\.[-\w]+)?$" :docker
    #"\.java$" :java
