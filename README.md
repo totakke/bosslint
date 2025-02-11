@@ -43,9 +43,9 @@ mv bosslint [/your/PATH/dir/]
 ### Build
 
 To build Bosslint yourself, you must install [Clojure CLI tools](https://clojure.org/guides/getting_started#_clojure_installer_and_cli_tools),
-[GraalVM](https://www.graalvm.org/docs/getting-started/#install-graalvm) and
-GraalVM's [`native-image`](https://www.graalvm.org/docs/getting-started/#native-images).
-Additionally, `GRAALVM_HOME` environment variable must be set.
+[GraalVM](https://www.graalvm.org/latest/getting-started/#installing) and
+GraalVM's `native-image`. Additionally, `GRAALVM_HOME` environment variable must
+be set.
 
 ```sh
 clojure -T:build native-image
@@ -90,26 +90,26 @@ shown by `bosslint linters` command or are found in
 
 ### Supported Linters
 
-| Linter | Bosslint linter name |
-| ------ | -------------------- |
-| [actionlint](https://rhysd.github.io/actionlint/) | `actionlint` |
-| [Checkstyle](https://checkstyle.org/) | `checkstyle` |
-| [clj-kondo](https://github.com/borkdude/clj-kondo) | `clj-kondo` |
-| [cljfmt](https://github.com/weavejester/cljfmt) | `cljfmt` |
-| [cljstyle](https://github.com/greglook/cljstyle) | `cljstyle` |
-| [dartanalyzer](https://dart.dev/tools/dartanalyzer) | `dartanalyzer` |
-| [Eastwood](https://github.com/jonase/eastwood) | `eastwood` |
-| [Flake8](https://flake8.pycqa.org/) | `flake8` |
-| [hadolint](https://github.com/hadolint/hadolint) | `hadolint` |
-| [jsonlint](https://github.com/zaach/jsonlint) | `jsonlint` |
-| [kubeval](https://www.kubeval.com/) | `kubeval` |
-| [markdownlint-cli](https://github.com/igorshubovych/markdownlint-cli) | `markdownlint` |
-| [ShellCheck](https://www.shellcheck.net/) | `shellcheck` |
-| [sql-lint](https://github.com/joereynolds/sql-lint) | `sql-lint` |
-| [stylelint](https://stylelint.io/) | `stylelint` |
-| [SwiftLint](https://realm.github.io/SwiftLint/) | `swiftlint` |
-| [tflint](https://github.com/terraform-linters/tflint) | `tflint` |
-| [yamllint](https://yamllint.readthedocs.io/) | `yamllint` |
+| Linter | Bosslint linter name | Target files |
+| ------ | -------------------- | ------------ |
+| [actionlint](https://rhysd.github.io/actionlint/) | `actionlint` | `.github/workflows/*.{yaml,yml}` |
+| [Checkstyle](https://checkstyle.org/) | `checkstyle` | `**/*.java` |
+| [clj-kondo](https://github.com/borkdude/clj-kondo) | `clj-kondo` | `**/*.{clj,cljc,cljs}` |
+| [cljfmt](https://github.com/weavejester/cljfmt) | `cljfmt` | `**/*.{clj,cljc,cljs}` |
+| [cljstyle](https://github.com/greglook/cljstyle) | `cljstyle` | `**/*.{clj,cljc,cljs}` |
+| [dartanalyzer](https://dart.dev/tools/dartanalyzer) | `dartanalyzer` | `**/*.dart` |
+| [Eastwood](https://github.com/jonase/eastwood) | `eastwood` | `**/*.{clj,cljc}` |
+| [Flake8](https://flake8.pycqa.org/) | `flake8` | `**/*.py` |
+| [hadolint](https://github.com/hadolint/hadolint) | `hadolint` | `**/Dockerfile` |
+| [jsonlint](https://github.com/zaach/jsonlint) | `jsonlint` | `**/*.json` |
+| [kubeval](https://www.kubeval.com/) | `kubeval` | `**/*.{yaml,yml}` |
+| [markdownlint-cli](https://github.com/igorshubovych/markdownlint-cli) | `markdownlint` | `**/*.{markdown,md}` |
+| [ShellCheck](https://www.shellcheck.net/) | `shellcheck` | `**/*.sh` |
+| [sql-lint](https://github.com/joereynolds/sql-lint) | `sql-lint` | `**/*.sql` |
+| [stylelint](https://stylelint.io/) | `stylelint` | `**/*.{css,sass,scss}` |
+| [SwiftLint](https://realm.github.io/SwiftLint/) | `swiftlint` | `**/*.swift` |
+| [tflint](https://github.com/terraform-linters/tflint) | `tflint` | `**/*.tf` |
+| [yamllint](https://yamllint.readthedocs.io/) | `yamllint` | `**/*.{yaml,yml}` |
 
 ### Configuration
 
