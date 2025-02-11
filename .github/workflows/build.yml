@@ -25,4 +25,4 @@ jobs:
       run: clojure -X:test
 
     - name: Build
-      run: clojure -M:native-image
+      run: clojure -T:build native-image

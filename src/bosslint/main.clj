@@ -22,12 +22,16 @@
                              yamllint)
             [bosslint.process :as process]
             [clj-sub-command.core :as cmd]
+            [clojure.java.io :as io]
             [clojure.string :as string]
             [clojure.tools.cli :as cli]
             [io.aviso.ansi :as ansi])
   (:gen-class))
 
-(def version "0.6.0")
+(def version
+  (if-let [url (io/resource "VERSION")]
+    (slurp url)
+    "?.?.?"))
 
 (defn- list-linters []
   (sort-by name (descendants :bosslint/linter)))
@@ -165,9 +169,6 @@
 (defn validate-check-cmd-args [args]
   (let [{:keys [options arguments errors summary]} (cli/parse-opts args check-cmd-options)]
     (cond
-      (:version options)
-      {:exit-message version :ok? true}
-
       (:help options)
       {:exit-message (check-cmd-usage summary) :ok? true}
 

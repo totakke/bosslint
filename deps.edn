@@ -6,16 +6,9 @@
         org.clojure/tools.deps {:mvn/version "0.21.1471"}
         org.slf4j/slf4j-simple {:mvn/version "2.0.16"}}
 
- :aliases {:native-image {:extra-deps
-                          {clj.native-image/clj.native-image
-                           {:git/url "https://github.com/taylorwood/clj.native-image.git"
-                            :sha "4604ae76855e09cdabc0a2ecc5a7de2cc5b775d6"}}
-                          :jvm-opts ["-Dclojure.compiler.direct-linking=true"]
-                          :main-opts ["-m" "clj.native-image" "bosslint.main"
-                                      "--diagnostics-mode"
-                                      "--initialize-at-build-time"
-                                      "--no-fallback"
-                                      "-H:Name=bosslint"]}
+ :aliases {:build {:extra-deps {io.github.clojure/tools.build
+                                {:git/tag "v0.10.7" :git/sha "573711e"}}
+                   :ns-default build}
 
            :test {:extra-paths ["test"]
                   :extra-deps {io.github.cognitect-labs/test-runner

@@ -47,12 +47,9 @@ To build Bosslint yourself, you must install [Clojure CLI tools](https://clojure
 GraalVM's [`native-image`](https://www.graalvm.org/docs/getting-started/#native-images).
 Additionally, `GRAALVM_HOME` environment variable must be set.
 
-```console
-$ clojure -M:native-image
-Compiling bosslint.main
- ...
-Finished generating 'bosslint' in 17.8s.
-$ mv bosslint [/your/PATH/dir/]
+```sh
+clojure -T:build native-image
+mv bosslint [/your/PATH/dir/]
 ```
 
 ## Usage
