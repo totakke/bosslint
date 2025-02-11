@@ -1,26 +1,64 @@
-{:checkstyle {:command-options ["-c" "google_checks.xml"]}
+{:actionlint
+ {:disabled? false}
 
- :cljfmt {:version "0.6.4"
-          :clojure {:command-options ["--indents" "/path/to/indentation.edn"]}}
+ :checkstyle
+ {:disabled? false
+  :command-options ["-c" "google_checks.xml"]}
 
- :cljstyle {:disabled? false}
+ :clj-kondo
+ {:disabled? false}
 
- :eastwood {:disabled? true
-            :version "0.3.7"}
+ :cljfmt
+ {:disabled? false
+  :version "0.13.0" ; default "RELEASE"
+  :clojure {:command-options ["--indents" "/path/to/indentation.edn"]}}
 
- :dartanalyzer {:command-options ["--no-hints"]}
+ :cljstyle
+ {:disabled? false}
 
- :flake8 {:command-options ["--count"
-                            "--ignore=F401,E501"]}
+ :dartanalyzer
+ {:disabled? false
+  :command-options ["--no-hints"]}
 
- :jsonlint {:command-options ["-q"]}
+ :eastwood
+ {:disabled? false
+  :version "1.4.3" ; default "RELEASE"
+  }
 
- :kubeval {:command-options ["--strict"]}
+ :flake8
+ {:disabled? false
+  :command-options ["--count"
+                    "--ignore=F401,E501"]}
 
- :markdownlint {:command-options ["-c" "/path/to/markdownlint.yaml"]}
+ :hadolint
+ {:disabled? false}
 
- :stylelint {:command-options ["--config" "/path/to/stylelintrc.json"]}
+ :jsonlint
+ {:disabled? false
+  :command-options ["-q"]}
 
- :tflint {:command-options ["-f" "json"]}
+ :kubeval
+ {:disabled? false
+  :command-options ["--strict"]}
 
- :yamllint {:command-options ["--no-warnings"]}}
+ :markdownlint
+ {:disabled? false
+  :command-options ["-c" "/path/to/markdownlint.yaml"]}
+
+ :shellcheck
+ {:disabled? false}
+
+ :stylelint
+ {:disabled? false
+  :command-options ["--config" "/path/to/stylelintrc.json"]}
+
+ :swiftlint
+ {:disabled? false}
+
+ :tflint
+ {:disabled? false
+  :command-options ["-f" "json"]}
+
+ :yamllint
+ {:disabled? false
+  :command-options ["--no-warnings"]}}

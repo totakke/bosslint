@@ -86,9 +86,9 @@ bosslint check :all
 Bosslint just dispatches each linter but does not contain any linters
 themselves. You must install each linter preliminarily. Supported linters are
 shown by `bosslint linters` command or are found in
-[Supported Linters](#supported-linters) section.
+[Supported linters](#supported-linters) section.
 
-### Supported Linters
+### Supported linters
 
 | Linter | Bosslint linter name | Target files |
 | ------ | -------------------- | ------------ |
@@ -125,19 +125,20 @@ Alternatively, you can specify a configuration file with `--config` option.
 bosslint check --config path/to/config.edn ref1 ref2
 ```
 
-The configuration file must be written in Extensible Data Notation (EDN) format.
+The configuration file must be written in Extensible Data Notation (EDN) format,
+e.g.,
 
 ```clojure
 {:clj-kondo
  {:disabled? false}
 
  :cljfmt
- {:version "0.6.4"
+ {:version "0.13.0"
   :clojure {:command-options ["--indents" "/path/to/indentation.edn"]}}
 
  :eastwood
  {:disabled? true
-  :version "0.3.7"}}
+  :version "1.4.3"}}
 ```
 
 The configuration file has a single map including linter keys and config vals.
