@@ -18,7 +18,10 @@
                  :string version})
   (b/compile-clj {:basis basis
                   :src-dirs ["src"]
-                  :class-dir class-dir})
+                  :class-dir class-dir
+                  :compile-opts {:elide-meta [:added :doc :file :line]
+                                 :direct-linking true}
+                  :java-opts ["-Dio.aviso.ansi.enable=true"]})
   (b/uber {:class-dir class-dir
            :uber-file uber-file
            :basis basis
