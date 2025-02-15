@@ -2,6 +2,17 @@
 
 ## [Unreleased]
 
+## [0.6.120] - 2025-02-15
+
+### Changed
+
+- Use tools.build to build a binary. ([4ef2c8d](https://github.com/totakke/bosslint/commit/4ef2c8d))
+  - Change versioning to `MAJOR.MINOR.COMMITS`.
+
+### Fixed
+
+- Add missing CSS type. ([d72eba2](https://github.com/totakke/bosslint/commit/d72eba2))
+
 ## [0.6.0] - 2025-02-08
 
 ### Added
@@ -85,7 +96,8 @@
 
 First release.
 
-[Unreleased]: https://github.com/totakke/bosslint/compare/v0.6.0...HEAD
+[Unreleased]: https://github.com/totakke/bosslint/compare/v0.6.120...HEAD
+[0.6.120]: https://github.com/totakke/bosslint/compare/v0.6.0...v0.6.120
 [0.6.0]: https://github.com/totakke/bosslint/compare/v0.5.0...v0.6.0
 [0.5.0]: https://github.com/totakke/bosslint/compare/v0.4.1...v0.5.0
 [0.4.1]: https://github.com/totakke/bosslint/compare/0.4.0...v0.4.1
