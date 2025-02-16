@@ -23,7 +23,7 @@
  :eastwood
  {:disabled? false
   :version "1.4.3" ; default "RELEASE"
-  }
+  :options {:exclude-linters [:unused-ret-vals]}}
 
  :flake8
  {:disabled? false

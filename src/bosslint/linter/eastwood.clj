@@ -23,11 +23,12 @@
         (string/replace #"/" "."))))
 
 (defn- eastwood-options
-  [files]
-  (->> (map :git-path files)
-       (map path->ns)
-       (string/join " ")
-       (format "{:namespaces [%s]}")))
+  [files additional-options]
+  (pr-str
+   (assoc (or additional-options {})
+          :namespaces (->> (map :git-path files)
+                           (keep path->ns)
+                           (map symbol)))))
 
 (defn- aliases-with-extra-paths
   [dir]
@@ -52,7 +53,7 @@
     (if (zero? (process/run "clojure"
                             "-Sdeps" (clojure-sdeps version)
                             (str "-M" (string/join aliases))
-                            (eastwood-options files)))
+                            (eastwood-options files (:options conf))))
       :success
       :error)))
 
@@ -62,7 +63,7 @@
         args ["lein"
               "update-in" ":plugins" "conj" (format "[jonase/eastwood \"%s\"]" version)
               "--" "eastwood"
-              (eastwood-options files)]]
+              (eastwood-options files (:options conf))]]
     (if (zero? (apply process/run args))
       :success
       :error)))
