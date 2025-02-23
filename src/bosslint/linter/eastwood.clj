@@ -80,12 +80,12 @@
     (let [top-dir (git/top-dir)]
       (binding [process/*working-directory* top-dir]
         (if-let [f (cond
-                     (and (process/command-exists? "clojure")
-                          (linter/clojure-project?))
-                     #(eastwood-clojure %1 %2 top-dir)
-
                      (and (process/command-exists? "lein")
                           (linter/leiningen-project?))
-                     eastwood-lein)]
+                     eastwood-lein
+
+                     (and (process/command-exists? "clojure")
+                          (linter/clojure-project?))
+                     #(eastwood-clojure %1 %2 top-dir))]
           (f files conf)
           (println (ansi/yellow "Command not found: clojure or lein")))))))
