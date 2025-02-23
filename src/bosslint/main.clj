@@ -8,6 +8,7 @@
                              cljfmt
                              cljstyle
                              dartanalyzer
+                             dotenv-linter
                              eastwood
                              flake8
                              hadolint
@@ -43,6 +44,7 @@
    #"\.css$" :css
    #"\.dart$" :dart
    #"Dockerfile(\.[-\w]+)?$" :docker
+   #"(^|/)\.env$" :dot-env
    #"\.java$" :java
    #"\.json$" :json
    #"\.(md|markdown)$" :markdown

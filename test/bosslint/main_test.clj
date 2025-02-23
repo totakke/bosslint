@@ -11,6 +11,12 @@
     "path/to/foo.dart"          #{:dart}
     "path/to/Dockerfile"        #{:docker}
     "path/to/Dockerfile.dev"    #{:docker}
+
+    ".env"                      #{:dot-env}
+    "path/to/.env"              #{:dot-env}
+    "foo.env"                   #{:other}
+    "path/to/foo.env"           #{:other}
+
     "path/to/foo.java"          #{:java}
     "path/to/README.md"         #{:markdown}
     "path/to/foo.py"            #{:python}
