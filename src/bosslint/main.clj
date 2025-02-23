@@ -43,7 +43,7 @@
    #"\.cljs$" :cljs
    #"\.css$" :css
    #"\.dart$" :dart
-   #"Dockerfile(\.[-\w]+)?$" :docker
+   #"(^|/)Dockerfile(\.[-\w]+)?$" :docker
    #"(^|/)\.env$" :dot-env
    #"\.java$" :java
    #"\.json$" :json

@@ -9,8 +9,12 @@
     "path/to/foo.cljs"          #{:cljs}
     "path/to/foo.css"           #{:css}
     "path/to/foo.dart"          #{:dart}
+
+    "Dockerfile"                #{:docker}
     "path/to/Dockerfile"        #{:docker}
     "path/to/Dockerfile.dev"    #{:docker}
+    "foo.Dockerfile"            #{:other}
+    "path/to/foo.Dockerfile"    #{:other}
 
     ".env"                      #{:dot-env}
     "path/to/.env"              #{:dot-env}
