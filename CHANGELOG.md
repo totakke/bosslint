@@ -2,6 +2,17 @@
 
 ## [Unreleased]
 
+### Added
+
+- Add dotenv-linter linter. [a65ad21](https://github.com/totakke/bosslint/commit/a65ad21)
+- eastwood: support options in a config. [647e4c1](https://github.com/totakke/bosslint/commit/647e4c1)
+- cljfmt: support standalone cli. [93834f6](https://github.com/totakke/bosslint/commit/93834f6)
+
+### Fixed
+
+- Tweak Dockerfile regexp. [a518aab](https://github.com/totakke/bosslint/commit/a518aab)
+- eastwood: replace project detection of clojure and leiningen. [b56de96](https://github.com/totakke/bosslint/commit/b56de96)
+
 ## [0.6.120] - 2025-02-15
 
 ### Changed
