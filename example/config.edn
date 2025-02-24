@@ -11,7 +11,7 @@
  :cljfmt
  {:disabled? false
   :version "0.13.0" ; default "RELEASE"
-  :clojure {:command-options ["--indents" "/path/to/indentation.edn"]}}
+  :command-options ["--indents" "/path/to/indentation.edn"]}
 
  :cljstyle
  {:disabled? false}
