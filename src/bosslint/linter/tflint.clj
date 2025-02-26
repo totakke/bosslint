@@ -10,9 +10,9 @@
 
   (lint [files conf]
     (when (linter/check-command "tflint")
-      (let [args (concat ["tflint"]
+      (let [args (concat ["tflint" "--recursive"]
                          (:command-options conf)
-                         (map :absolute-path files))]
+                         (mapcat #(vector "--filter" (:git-path %)) files))]
         (if (zero? (apply process/run args))
           :success
           :error)))))
