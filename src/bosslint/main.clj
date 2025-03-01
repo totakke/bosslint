@@ -3,6 +3,7 @@
             [bosslint.git :as git]
             [bosslint.linter :as linter]
             (bosslint.linter actionlint
+                             ansible-lint
                              checkstyle
                              clj-kondo
                              cljfmt
@@ -37,34 +38,6 @@
 (defn- list-linters []
   (sort-by name (descendants :bosslint/linter)))
 
-(def ^:private path-type-pairs
-  {#"\.clj$" :clj
-   #"\.cljc$" :cljc
-   #"\.cljs$" :cljs
-   #"\.css$" :css
-   #"\.dart$" :dart
-   #"(^|/)Dockerfile(\.[-\w]+)?$" :docker
-   #"(^|/)\.env$" :dot-env
-   #"\.java$" :java
-   #"\.json$" :json
-   #"\.(md|markdown)$" :markdown
-   #"\.py$" :python
-   #"\.s[ac]ss$" :sass
-   #"\.sh$" :shell
-   #"\.sql$" :sql
-   #"\.swift$" :swift
-   #"\.tf$" :terraform
-   #"^\.github/workflows/.+\.ya?ml$" :workflow
-   #"\.ya?ml$" :yaml})
-
-(defn path->types [s]
-  (let [types (->> path-type-pairs
-                   (filter #(re-find (first %) s))
-                   (map second))]
-    (if (seq types)
-      (set types)
-      #{:other})))
-
 (defn enum-files [ref1 ref2]
   (let [top-dir (git/top-dir)]
     (->> (if (= ref1 ":all")
@@ -91,7 +64,8 @@
     (let [diff-files (enum-files ref1 ref2)
           file-group (->> diff-files
                           (mapcat (fn [{:keys [git-path] :as m}]
-                                    (map #(assoc m :type %) (path->types git-path))))
+                                    (map #(assoc m :type %)
+                                         (linter/path->types git-path))))
                           (group-by :type))
           conf (if (:config options)
                  (config/load-config (:config options))

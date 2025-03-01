@@ -1,6 +1,10 @@
 {:actionlint
  {:disabled? false}
 
+ :ansible-lint
+ {:disabled? false
+  :command-options ["-s"]}
+
  :checkstyle
  {:disabled? false
   :command-options ["-c" "google_checks.xml"]}

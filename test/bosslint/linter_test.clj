@@ -1,9 +1,9 @@
-(ns bosslint.main-test
-  (:require [bosslint.main :as b]
+(ns bosslint.linter-test
+  (:require [bosslint.linter :as linter]
             [clojure.test :refer [are deftest]]))
 
 (deftest path->types-test
-  (are [s k] (= (b/path->types s) k)
+  (are [s k] (= (linter/path->types s) k)
     "path/to/foo.clj"           #{:clj}
     "path/to/foo.cljc"          #{:cljc}
     "path/to/foo.cljs"          #{:cljs}

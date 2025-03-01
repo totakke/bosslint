@@ -23,8 +23,40 @@
        (derive ~key :bosslint/linter)
        ~@defmethods)))
 
+(def ^:private path-type-pairs
+  {#"\.clj$" :clj
+   #"\.cljc$" :cljc
+   #"\.cljs$" :cljs
+   #"\.css$" :css
+   #"\.dart$" :dart
+   #"(^|/)Dockerfile(\.[-\w]+)?$" :docker
+   #"(^|/)\.env$" :dot-env
+   #"\.java$" :java
+   #"\.json$" :json
+   #"\.(md|markdown)$" :markdown
+   #"\.py$" :python
+   #"\.s[ac]ss$" :sass
+   #"\.sh$" :shell
+   #"\.sql$" :sql
+   #"\.swift$" :swift
+   #"\.tf$" :terraform
+   #"^\.github/workflows/.+\.ya?ml$" :workflow
+   #"\.ya?ml$" :yaml})
+
+(def ^:private file-type-set
+  (set (vals path-type-pairs)))
+
+(defn path->types [s]
+  (let [types (->> path-type-pairs
+                   (filter #(re-find (first %) s))
+                   (map second))]
+    (if (seq types)
+      (set types)
+      #{:other})))
+
 (defn select-files
   [file-group types]
+  {:pre [(every? file-type-set types)]}
   (mapcat #(get file-group %) types))
 
 (defn check-command
