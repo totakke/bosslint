@@ -93,11 +93,13 @@ shown by `bosslint linters` command or are found in
 | Linter | Bosslint linter name | Target files |
 | ------ | -------------------- | ------------ |
 | [actionlint](https://rhysd.github.io/actionlint/) | `actionlint` | `.github/workflows/*.{yaml,yml}` |
+| [ansible-lint](https://ansible.readthedocs.io/projects/lint/) | `ansible-lint` | `**/*.{yaml,yml}` |
 | [Checkstyle](https://checkstyle.org/) | `checkstyle` | `**/*.java` |
 | [clj-kondo](https://github.com/borkdude/clj-kondo) | `clj-kondo` | `**/*.{clj,cljc,cljs}` |
 | [cljfmt](https://github.com/weavejester/cljfmt) | `cljfmt` | `**/*.{clj,cljc,cljs}` |
 | [cljstyle](https://github.com/greglook/cljstyle) | `cljstyle` | `**/*.{clj,cljc,cljs}` |
 | [dartanalyzer](https://dart.dev/tools/dartanalyzer) | `dartanalyzer` | `**/*.dart` |
+| [dotenv-linter](https://dotenv-linter.github.io/) | `dotenv-linter` | `**/.env` |
 | [Eastwood](https://github.com/jonase/eastwood) | `eastwood` | `**/*.{clj,cljc}` |
 | [Flake8](https://flake8.pycqa.org/) | `flake8` | `**/*.py` |
 | [hadolint](https://github.com/hadolint/hadolint) | `hadolint` | `**/Dockerfile` |
