@@ -2,7 +2,7 @@
   (:require [clojure.java.process :as p]
             [clojure.tools.build.api :as b]))
 
-(def version (format "0.6.%s" (b/git-count-revs nil)))
+(def version (format "0.7.%s" (b/git-count-revs nil)))
 (def class-dir "target/classes")
 (def basis (b/create-basis {:project "deps.edn"}))
 (def uber-file "target/bosslint.jar")
