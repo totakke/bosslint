@@ -1,17 +1,16 @@
 (ns build
-  (:require [clojure.java.process :as p]
-            [clojure.tools.build.api :as b]))
+  (:require [clojure.tools.build.api :as b]))
 
 (def version (format "0.7.%s" (b/git-count-revs nil)))
 (def class-dir "target/classes")
 (def basis (b/create-basis {:project "deps.edn"}))
 (def uber-file "target/bosslint.jar")
+(def bin-file "target/bosslint")
 
 (defn clean [_]
   (b/delete {:path "target"}))
 
 (defn uber [_]
-  (clean nil)
   (b/copy-dir {:src-dirs ["src"]
                :target-dir class-dir})
   (b/write-file {:path (str class-dir "/VERSION")
@@ -28,11 +27,14 @@
            :main 'bosslint.main}))
 
 (defn native-image [_]
-  (uber nil)
   (let [native-image-bin (str (System/getenv "GRAALVM_HOME")
                               "/bin/native-image")]
-    (p/exec {:out :inherit, :err :inherit}
-            native-image-bin "-jar" uber-file
-            "--diagnostics-mode"
-            "--initialize-at-build-time"
-            "--no-fallback")))
+    (b/process {:command-args [native-image-bin "-jar" uber-file bin-file
+                               "--diagnostics-mode"
+                               "--initialize-at-build-time"
+                               "--no-fallback"]})))
+
+(defn bin [_]
+  (clean nil)
+  (uber nil)
+  (native-image nil))

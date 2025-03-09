@@ -35,7 +35,7 @@ jobs:
         run: clojure -X:test
 
       - name: Build
-        run: clojure -T:build native-image
+        run: clojure -T:build bin
 
       - name: Get version
         id: get-version
@@ -45,4 +45,4 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: bosslint-${{ steps.get-version.outputs.version }}-${{ matrix.os }}
-          path: bosslint*
+          path: target/bosslint*

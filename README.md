@@ -48,8 +48,8 @@ GraalVM's `native-image`. Additionally, `GRAALVM_HOME` environment variable must
 be set.
 
 ```sh
-clojure -T:build native-image
-mv bosslint [/your/PATH/dir/]
+clojure -T:build bin
+mv target/bosslint [/your/PATH/dir/]
 ```
 
 ## Usage
