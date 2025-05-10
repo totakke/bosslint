@@ -8,6 +8,7 @@
                              clj-kondo
                              cljfmt
                              cljstyle
+                             commitlint
                              dartanalyzer
                              dotenv-linter
                              eastwood
@@ -74,6 +75,8 @@
                             (comp (set (:linter options)) name)
                             #(not (:disabled? (get conf (keyword (name %))))))
           linters (filter enabled-linter? (list-linters))
+          diff {:ref1 (when-not (= ref1 ":all") ref1)
+                :ref2 ref2}
           statuses (atom #{})]
       (when linter/*verbose?*
         (->> ["Enabled linters:"
@@ -94,7 +97,9 @@
                      (string/join \newline)
                      ansi/cyan
                      println))
-              (let [status (linter/lint key files (get conf (keyword (name key))))]
+              (let [status (linter/lint key
+                                        (assoc diff :files files)
+                                        (get conf (keyword (name key))))]
                 (swap! statuses conj status)
                 (case status
                   :success (println (ansi/cyan "==>") "Success ✅")

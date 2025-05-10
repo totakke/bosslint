@@ -8,7 +8,7 @@
   (files [file-group]
     (linter/select-files file-group [:json]))
 
-  (lint [files conf]
+  (lint [{:keys [files]} conf]
     (when (linter/check-command "jsonlint")
       (doseq [file files]
         (let [args (concat ["jsonlint" (:absolute-path file)]

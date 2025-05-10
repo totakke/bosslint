@@ -8,7 +8,7 @@
   (files [file-group]
     (linter/select-files file-group [:sql]))
 
-  (lint [files conf]
+  (lint [{:keys [files]} conf]
     (when (linter/check-command "sql-lint")
       (doseq [file files]
         (let [args (concat ["sql-lint"]

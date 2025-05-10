@@ -8,7 +8,7 @@
   (files [file-group]
     (linter/select-files file-group [:workflow]))
 
-  (lint [files _]
+  (lint [{:keys [files]} _]
     (when (linter/check-command "actionlint")
       (case (apply process/run "actionlint" (map :absolute-path files))
         0 :success

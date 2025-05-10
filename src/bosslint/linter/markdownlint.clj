@@ -8,7 +8,7 @@
   (files [file-group]
     (linter/select-files file-group [:markdown]))
 
-  (lint [files conf]
+  (lint [{:keys [files]} conf]
     (when (linter/check-command "markdownlint")
       (let [args (concat ["markdownlint"]
                          (:command-options conf)

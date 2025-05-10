@@ -8,7 +8,7 @@
   (files [file-group]
     (linter/select-files file-group [:swift]))
 
-  (lint [files conf]
+  (lint [{:keys [files]} conf]
     (when (linter/check-command "swiftlint")
       (let [args (concat ["swiftlint" "lint"]
                          (map :absolute-path files))]

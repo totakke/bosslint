@@ -8,7 +8,7 @@
   (files [file-group]
     (linter/select-files file-group [:shell]))
 
-  (lint [files _]
+  (lint [{:keys [files]} _]
     (when (linter/check-command "shellcheck")
       (case (apply process/run "shellcheck" (map :absolute-path files))
         0 :success

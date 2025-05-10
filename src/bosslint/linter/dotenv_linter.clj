@@ -8,7 +8,7 @@
   (files [file-group]
     (linter/select-files file-group [:dot-env]))
 
-  (lint [files _]
+  (lint [{:keys [files]} _]
     (when (linter/check-command "dotenv-linter")
       (if (zero? (apply process/run "dotenv-linter" (map :absolute-path files)))
         :success

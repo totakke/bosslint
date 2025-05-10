@@ -8,7 +8,7 @@
   (files [file-group]
     (linter/select-files file-group [:java]))
 
-  (lint [files conf]
+  (lint [{:keys [files]} conf]
     (when (linter/check-command "checkstyle")
       (let [args (concat ["checkstyle"]
                          (:command-options conf)
