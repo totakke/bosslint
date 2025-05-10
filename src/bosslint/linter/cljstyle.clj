@@ -8,7 +8,7 @@
   (files [file-group]
     (linter/select-files file-group [:clj :cljc :cljs]))
 
-  (lint [files _]
+  (lint [{:keys [files]} _]
     (when (linter/check-command "cljstyle")
       (case (apply process/run "cljstyle" "check" (map :absolute-path files))
         0 :success

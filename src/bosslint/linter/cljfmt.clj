@@ -49,7 +49,7 @@
   (files [file-group]
     (linter/select-files file-group [:clj :cljc :cljs]))
 
-  (lint [files conf]
+  (lint [{:keys [files]} conf]
     (if-let [f (cond
                  (process/command-exists? "cljfmt")
                  cljfmt-cli

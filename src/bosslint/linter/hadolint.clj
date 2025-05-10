@@ -8,7 +8,7 @@
   (files [file-group]
     (linter/select-files file-group [:docker]))
 
-  (lint [files _]
+  (lint [{:keys [files]} _]
     (when (linter/check-command "hadolint")
       (if (zero? (apply process/run "hadolint" (map :absolute-path files)))
         :success

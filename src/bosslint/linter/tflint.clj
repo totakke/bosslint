@@ -8,7 +8,7 @@
   (files [file-group]
     (linter/select-files file-group [:terraform]))
 
-  (lint [files conf]
+  (lint [{:keys [files]} conf]
     (when (linter/check-command "tflint")
       (let [args (concat ["tflint" "--recursive"]
                          (:command-options conf)

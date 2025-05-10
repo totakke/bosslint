@@ -74,7 +74,7 @@
     (->> (linter/select-files file-group [:yaml])
          (filter kube-yaml?)))
 
-  (lint [files conf]
+  (lint [{:keys [files]} conf]
     (when (linter/check-command "kubeval")
       (let [args (concat ["kubeval"]
                          (:command-options conf)

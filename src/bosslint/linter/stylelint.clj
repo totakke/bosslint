@@ -8,7 +8,7 @@
   (files [file-group]
     (linter/select-files file-group [:css :sass]))
 
-  (lint [files conf]
+  (lint [{:keys [files]} conf]
     (when (linter/check-command "stylelint")
       (let [args (concat ["stylelint"]
                          (:command-options conf)

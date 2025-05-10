@@ -8,7 +8,7 @@
   (files [file-group]
     (linter/select-files file-group [:dart]))
 
-  (lint [files conf]
+  (lint [{:keys [files]} conf]
     (when (linter/check-command "dartanalyzer")
       (let [args (concat ["dartanalyzer"]
                          (:command-options conf)

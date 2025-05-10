@@ -8,7 +8,7 @@
   (files [file-group]
     (linter/select-files file-group [:python]))
 
-  (lint [files conf]
+  (lint [{:keys [files]} conf]
     (when (linter/check-command "flake8")
       (let [args (concat ["flake8"]
                          (:command-options conf)

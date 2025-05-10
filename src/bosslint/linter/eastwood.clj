@@ -76,7 +76,7 @@
          (remove (fn [{:keys [git-path]}]
                    (some #(re-find % git-path) excludes)))))
 
-  (lint [files conf]
+  (lint [{:keys [files]} conf]
     (let [top-dir (git/top-dir)]
       (binding [process/*working-directory* top-dir]
         (if-let [f (cond

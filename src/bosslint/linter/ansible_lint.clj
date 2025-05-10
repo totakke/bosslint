@@ -8,7 +8,7 @@
   (files [file-group]
     (linter/select-files file-group [:yaml]))
 
-  (lint [files conf]
+  (lint [{:keys [files]} conf]
     (when (linter/check-command "ansible-lint")
       (let [args (concat ["ansible-lint"]
                          (:command-options conf)
