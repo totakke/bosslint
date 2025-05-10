@@ -3,11 +3,11 @@
         io.aviso/pretty {:mvn/version "1.4.4"}
         org.clojure/clojure {:mvn/version "1.12.0"}
         org.clojure/tools.cli {:mvn/version "1.1.230"}
-        org.clojure/tools.deps {:mvn/version "0.21.1471"}
-        org.slf4j/slf4j-simple {:mvn/version "2.0.16"}}
+        org.clojure/tools.deps {:mvn/version "0.23.1512"}
+        org.slf4j/slf4j-simple {:mvn/version "2.0.17"}}
 
  :aliases {:build {:extra-deps {io.github.clojure/tools.build
-                                {:git/tag "v0.10.7" :git/sha "573711e"}}
+                                {:git/tag "v0.10.8" :git/sha "2fdfd66"}}
                    :ns-default build}
 
            :test {:extra-paths ["test"]
