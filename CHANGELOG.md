@@ -2,6 +2,16 @@
 
 ## [Unreleased]
 
+## [0.8.137] - 2025-05-31
+
+### Added
+
+- Add commitlint linter. [#3](https://github.com/totakke/bosslint/pull/3)
+
+### Changed
+
+- Change a build fn from `native-image` to `bin`. [b52412a](https://github.com/totakke/bosslint/commit/b52412a)
+
 ## [0.7.130] - 2025-03-02
 
 ### Added
@@ -111,7 +121,8 @@
 
 First release.
 
-[Unreleased]: https://github.com/totakke/bosslint/compare/v0.7.130...HEAD
+[Unreleased]: https://github.com/totakke/bosslint/compare/v0.8.137...HEAD
+[0.8.137]: https://github.com/totakke/bosslint/compare/v0.7.130...v0.8.137
 [0.7.130]: https://github.com/totakke/bosslint/compare/v0.6.120...v0.7.130
 [0.6.120]: https://github.com/totakke/bosslint/compare/v0.6.0...v0.6.120
 [0.6.0]: https://github.com/totakke/bosslint/compare/v0.5.0...v0.6.0

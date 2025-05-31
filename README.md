@@ -35,7 +35,7 @@ OS & arch:
 Download & install:
 
 ```sh
-curl -sSL https://github.com/totakke/bosslint/releases/download/v0.7.130/bosslint_[os]_[arch] -o bosslint
+curl -sSL https://github.com/totakke/bosslint/releases/download/v0.8.137/bosslint_[os]_[arch] -o bosslint
 chmod +x bosslint
 mv bosslint [/your/PATH/dir/]
 ```
@@ -98,6 +98,7 @@ shown by `bosslint linters` command or are found in
 | [clj-kondo](https://github.com/borkdude/clj-kondo) | `clj-kondo` | `**/*.{clj,cljc,cljs}` |
 | [cljfmt](https://github.com/weavejester/cljfmt) | `cljfmt` | `**/*.{clj,cljc,cljs}` |
 | [cljstyle](https://github.com/greglook/cljstyle) | `cljstyle` | `**/*.{clj,cljc,cljs}` |
+| [commitlint](https://commitlint.js.org/) | `commitlint` | Commit messages |
 | [dartanalyzer](https://dart.dev/tools/dartanalyzer) | `dartanalyzer` | `**/*.dart` |
 | [dotenv-linter](https://dotenv-linter.github.io/) | `dotenv-linter` | `**/.env` |
 | [Eastwood](https://github.com/jonase/eastwood) | `eastwood` | `**/*.{clj,cljc}` |
