@@ -9,8 +9,8 @@ jobs:
     strategy:
       matrix:
         os:
-          - macos-13            # amd64 (x86_64)
-          - macos-14            # aarch64 (arm64)
+          - macos-15-intel      # amd64 (x86_64)
+          - macos-15            # aarch64 (arm64)
           - ubuntu-24.04        # amd64 (x86_64)
           - ubuntu-24.04-arm    # aarch64 (arm64)
     steps:
