@@ -66,7 +66,11 @@ aggregate statuses → exit code (0/1/2).
 1. Create `src/bosslint/linter/<name>.clj` with a `deflinter` form
 2. Require the new namespace in `src/bosslint/main.clj`'s ns form
 3. If it handles a new file type, add the regex→keyword to `path-type-pairs` and the keyword to `file-type-set` in `linter.clj`
-4. Update the supported linters table in `README.md` and `example/config.edn`
+4. Update `example/config.edn`
+
+## Communication
+
+- Issue and PR titles and descriptions must be written in English
 
 ## Code Style
 

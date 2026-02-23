@@ -24,6 +24,9 @@
  {:disabled? false
   :command-options ["--no-hints"]}
 
+ :dclint
+ {:disabled? false}
+
  :eastwood
  {:disabled? false
   :version "1.4.3" ; default "RELEASE"

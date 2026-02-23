@@ -10,6 +10,7 @@
                              cljstyle
                              commitlint
                              dartanalyzer
+                             dclint
                              dotenv-linter
                              eastwood
                              flake8

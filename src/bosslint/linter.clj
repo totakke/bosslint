@@ -30,6 +30,7 @@
    #"\.css$" :css
    #"\.dart$" :dart
    #"(^|/)Dockerfile(\.[-\w]+)?$" :docker
+   #"(^|/)(docker-)?compose(\.[-\w]+)?\.ya?ml$" :docker-compose
    #"(^|/)\.env$" :dot-env
    #"\.java$" :java
    #"\.json$" :json
