@@ -2,6 +2,16 @@
 
 ## [Unreleased]
 
+## [0.9.146] - 2026-02-28
+
+### Added
+
+- Add dclint (Docker Compose Linter) linter. [#5](https://github.com/totakke/bosslint/pull/5)
+
+### Fixed
+
+- Update CI actions and Clojure CLI versions. [#6](https://github.com/totakke/bosslint/pull/6)
+
 ## [0.8.137] - 2025-05-31
 
 ### Added
@@ -121,7 +131,8 @@
 
 First release.
 
-[Unreleased]: https://github.com/totakke/bosslint/compare/v0.8.137...HEAD
+[Unreleased]: https://github.com/totakke/bosslint/compare/v0.9.146...HEAD
+[0.9.146]: https://github.com/totakke/bosslint/compare/v0.8.137...v0.9.146
 [0.8.137]: https://github.com/totakke/bosslint/compare/v0.7.130...v0.8.137
 [0.7.130]: https://github.com/totakke/bosslint/compare/v0.6.120...v0.7.130
 [0.6.120]: https://github.com/totakke/bosslint/compare/v0.6.0...v0.6.120
