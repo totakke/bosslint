@@ -71,7 +71,7 @@
 (deflinter :linter/eastwood
   (name [] "Eastwood")
 
-  (files [file-group]
+  (files [file-group _]
     (->> (linter/select-files file-group [:clj :cljc])
          (remove (fn [{:keys [git-path]}]
                    (some #(re-find % git-path) excludes)))))

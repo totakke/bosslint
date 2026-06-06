@@ -5,7 +5,7 @@
 (deflinter :linter/commitlint
   (name [] "commitlint")
 
-  (files [file-group]
+  (files [file-group _]
     [:dummy])
 
   (lint [{:keys [ref1 ref2]} _]

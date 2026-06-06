@@ -5,7 +5,7 @@
 (deflinter :linter/jsonlint
   (name [] "jsonlint")
 
-  (files [file-group]
+  (files [file-group _]
     (linter/select-files file-group [:json]))
 
   (lint [{:keys [files]} conf]

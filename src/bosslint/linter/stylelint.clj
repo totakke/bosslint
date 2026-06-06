@@ -5,7 +5,7 @@
 (deflinter :linter/stylelint
   (name [] "stylelint")
 
-  (files [file-group]
+  (files [file-group _]
     (linter/select-files file-group [:css :sass]))
 
   (lint [{:keys [files]} conf]

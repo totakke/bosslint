@@ -32,4 +32,21 @@
     "path/to/foo.yml"           #{:yaml}
     "path/to/foo.yaml"          #{:yaml}
     ".github/workflows/foo.yml" #{:yaml :workflow}
+
+    "playbooks/deploy.yml"           #{:yaml :ansible}
+    "playbook/deploy.yml"            #{:yaml :ansible}
+    "roles/web/tasks/main.yml"       #{:yaml :ansible}
+    "roles/web/handlers/main.yml"    #{:yaml :ansible}
+    "roles/web/meta/main.yml"        #{:yaml :ansible}
+    "roles/web/vars/main.yml"        #{:yaml :ansible}
+    "roles/web/defaults/main.yml"    #{:yaml :ansible}
+    "group_vars/all.yml"             #{:yaml :ansible}
+    "host_vars/web01.yml"            #{:yaml :ansible}
+    "inventories/prod/hosts.yml"     #{:yaml :ansible}
+    "site.yml"                       #{:yaml :ansible}
+    "playbook.yaml"                  #{:yaml :ansible}
+    "inventory.yml"                  #{:yaml :ansible}
+    "roles/web/files/index.yml"      #{:yaml}
+    "roles/web/templates/conf.yml"   #{:yaml}
+
     "path/to/foo"               #{:other}))

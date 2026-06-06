@@ -8,7 +8,7 @@
 
 (defmulti name identity)
 
-(defmulti files (fn [key file-group] key))
+(defmulti files (fn [key file-group conf] key))
 
 (defmulti lint (fn [key diff config] key))
 
@@ -42,6 +42,8 @@
    #"\.swift$" :swift
    #"\.tf$" :terraform
    #"^\.github/workflows/.+\.ya?ml$" :workflow
+   #"(^|/)(playbooks?|roles/[^/]+/(tasks|handlers|meta|vars|defaults)|(group|host)_vars|inventories)/.+\.ya?ml$" :ansible
+   #"(^|/)(site|playbook|inventory)\.ya?ml$" :ansible
    #"\.ya?ml$" :yaml})
 
 (def ^:private file-type-set

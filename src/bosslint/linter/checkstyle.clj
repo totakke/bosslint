@@ -5,7 +5,7 @@
 (deflinter :linter/checkstyle
   (name [] "Checkstyle")
 
-  (files [file-group]
+  (files [file-group _]
     (linter/select-files file-group [:java]))
 
   (lint [{:keys [files]} conf]

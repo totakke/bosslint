@@ -5,7 +5,7 @@
 (deflinter :linter/shellcheck
   (name [] "ShellCheck")
 
-  (files [file-group]
+  (files [file-group _]
     (linter/select-files file-group [:shell]))
 
   (lint [{:keys [files]} _]

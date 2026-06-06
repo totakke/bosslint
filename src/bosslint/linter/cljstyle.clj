@@ -5,7 +5,7 @@
 (deflinter :linter/cljstyle
   (name [] "cljstyle")
 
-  (files [file-group]
+  (files [file-group _]
     (linter/select-files file-group [:clj :cljc :cljs]))
 
   (lint [{:keys [files]} _]

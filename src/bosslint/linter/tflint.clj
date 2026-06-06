@@ -5,7 +5,7 @@
 (deflinter :linter/tflint
   (name [] "tflint")
 
-  (files [file-group]
+  (files [file-group _]
     (linter/select-files file-group [:terraform]))
 
   (lint [{:keys [files]} conf]

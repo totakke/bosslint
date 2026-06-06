@@ -5,7 +5,7 @@
 (deflinter :linter/actionlint
   (name [] "actionlint")
 
-  (files [file-group]
+  (files [file-group _]
     (linter/select-files file-group [:workflow]))
 
   (lint [{:keys [files]} _]

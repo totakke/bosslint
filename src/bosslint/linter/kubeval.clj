@@ -70,7 +70,7 @@
 (deflinter :linter/kubeval
   (name [] "kubeval")
 
-  (files [file-group]
+  (files [file-group _]
     (->> (linter/select-files file-group [:yaml])
          (filter kube-yaml?)))
 

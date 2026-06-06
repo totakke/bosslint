@@ -5,7 +5,7 @@
 (deflinter :linter/sql-lint
   (name [] "sql-lint")
 
-  (files [file-group]
+  (files [file-group _]
     (linter/select-files file-group [:sql]))
 
   (lint [{:keys [files]} conf]
