@@ -5,7 +5,7 @@
 (deflinter :linter/yamllint
   (name [] "yamllint")
 
-  (files [file-group]
+  (files [file-group _]
     (linter/select-files file-group [:yaml]))
 
   (lint [{:keys [files]} conf]

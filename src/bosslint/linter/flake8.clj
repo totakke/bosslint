@@ -5,7 +5,7 @@
 (deflinter :linter/flake8
   (name [] "Flake8")
 
-  (files [file-group]
+  (files [file-group _]
     (linter/select-files file-group [:python]))
 
   (lint [{:keys [files]} conf]

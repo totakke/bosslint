@@ -5,7 +5,7 @@
 (deflinter :linter/clj-kondo
   (name [] "clj-kondo")
 
-  (files [file-group]
+  (files [file-group _]
     (linter/select-files file-group [:clj :cljc :cljs]))
 
   (lint [{:keys [files]} _]

@@ -90,7 +90,7 @@
              println))
 
       (doseq [key linters]
-        (if-let [files (seq (linter/files key file-group))]
+        (if-let [files (seq (linter/files key file-group (get conf (keyword (name key)))))]
           (do (println (str (ansi/green (linter/name key)) ":"))
               (when linter/*verbose?*
                 (->> ["Files:"

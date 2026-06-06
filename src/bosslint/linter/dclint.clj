@@ -12,7 +12,7 @@
 (deflinter :linter/dclint
   (name [] "Docker Compose Linter")
 
-  (files [file-group]
+  (files [file-group _]
     (linter/select-files file-group [:docker-compose]))
 
   (lint [{:keys [files]} conf]

@@ -5,7 +5,7 @@
 (deflinter :linter/swiftlint
   (name [] "Swiftlint")
 
-  (files [file-group]
+  (files [file-group _]
     (linter/select-files file-group [:swift]))
 
   (lint [{:keys [files]} conf]

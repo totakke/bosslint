@@ -5,7 +5,7 @@
 (deflinter :linter/markdownlint
   (name [] "markdownlint-cli")
 
-  (files [file-group]
+  (files [file-group _]
     (linter/select-files file-group [:markdown]))
 
   (lint [{:keys [files]} conf]

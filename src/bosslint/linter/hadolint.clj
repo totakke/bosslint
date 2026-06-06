@@ -5,7 +5,7 @@
 (deflinter :linter/hadolint
   (name [] "hadolint")
 
-  (files [file-group]
+  (files [file-group _]
     (linter/select-files file-group [:docker]))
 
   (lint [{:keys [files]} _]

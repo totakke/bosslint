@@ -5,7 +5,7 @@
 (deflinter :linter/dartanalyzer
   (name [] "dartanalyzer")
 
-  (files [file-group]
+  (files [file-group _]
     (linter/select-files file-group [:dart]))
 
   (lint [{:keys [files]} conf]

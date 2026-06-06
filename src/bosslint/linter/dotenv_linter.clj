@@ -5,7 +5,7 @@
 (deflinter :linter/dotenv-linter
   (name [] "dotenv-linter")
 
-  (files [file-group]
+  (files [file-group _]
     (linter/select-files file-group [:dot-env]))
 
   (lint [{:keys [files]} _]

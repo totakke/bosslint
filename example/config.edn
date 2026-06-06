@@ -3,7 +3,16 @@
 
  :ansible-lint
  {:disabled? false
-  :command-options ["-s"]}
+  :command-options ["-s"]
+
+  ;; Extra path regexes to include even if outside the conventional
+  ;; Ansible layout (playbooks/, roles/<r>/{tasks,handlers,meta,vars,defaults},
+  ;; group_vars/, host_vars/, inventories/, site.yml, playbook.yml,
+  ;; inventory.yml).
+  :include-paths ["^ansible/"]
+
+  ;; Path regexes to exclude from ansible-lint.
+  :exclude-paths ["/vendor/"]}
 
  :checkstyle
  {:disabled? false
