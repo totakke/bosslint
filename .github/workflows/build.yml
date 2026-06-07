@@ -17,9 +17,9 @@ jobs:
         version: '22.3.0'
 
     - name: Setup Clojure
-      uses: DeLaGuardo/setup-clojure@13.5
+      uses: DeLaGuardo/setup-clojure@13
       with:
-        cli: '1.12.4.1602'
+        cli: '1.12.5.1654'
 
     - name: Test
       run: clojure -X:test
