@@ -32,6 +32,7 @@
     (b/process {:command-args [native-image-bin "-jar" uber-file bin-file
                                "--diagnostics-mode"
                                "--initialize-at-build-time"
+                               "--initialize-at-run-time=org.apache.http.impl.auth.NTLMEngineImpl"
                                "--no-fallback"]})))
 
 (defn bin [_]
