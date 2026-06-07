@@ -27,9 +27,9 @@ jobs:
           version: '22.3.0'
 
       - name: Setup Clojure
-        uses: DeLaGuardo/setup-clojure@13.5
+        uses: DeLaGuardo/setup-clojure@13
         with:
-          cli: '1.12.4.1602'
+          cli: '1.12.5.1654'
 
       - name: Test
         run: clojure -X:test
@@ -42,7 +42,7 @@ jobs:
         run: echo "version=$(./bosslint --version)" >> "$GITHUB_OUTPUT"
 
       - name: Upload
-        uses: actions/upload-artifact@v6
+        uses: actions/upload-artifact@v7
         with:
           name: bosslint-${{ steps.get-version.outputs.version }}-${{ matrix.os }}
           path: target/bosslint*
