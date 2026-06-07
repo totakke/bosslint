@@ -2,6 +2,11 @@
 
 ## [Unreleased]
 
+### Changed
+
+- ansible-lint: scope to Ansible YAML by path with include/exclude. [#7](https://github.com/totakke/bosslint/pull/7)
+- Update dependencies and CI actions. [#8](https://github.com/totakke/bosslint/pull/8)
+
 ## [0.9.146] - 2026-02-28
 
 ### Added
