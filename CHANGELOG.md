@@ -2,6 +2,10 @@
 
 ## [Unreleased]
 
+### Added
+
+- Add `:staged` ref to check only Git-staged files. [#9](https://github.com/totakke/bosslint/pull/9)
+
 ### Changed
 
 - ansible-lint: scope to Ansible YAML by path with include/exclude. [#7](https://github.com/totakke/bosslint/pull/7)
