@@ -83,6 +83,13 @@ You can use `:all` to check all files under a Git project.
 bosslint check :all
 ```
 
+You can use `:staged` to check only files staged in the Git index (equivalent to
+`git diff --cached`). This is useful for a `pre-commit` hook.
+
+```sh
+bosslint check :staged
+```
+
 Bosslint just dispatches each linter but does not contain any linters
 themselves. You must install each linter preliminarily. Supported linters are
 shown by `bosslint linters` command or are found in

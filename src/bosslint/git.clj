@@ -8,17 +8,25 @@
   (when-not (process/command-exists? command)
     (throw (ex-info (str "Command not found: " command) {}))))
 
-(defn diff
-  [ref1 ref2]
+(defn- run-diff
+  [extra-args]
   (assert-command "git")
-  (let [args (cond-> ["git" "diff" "--name-only" "--diff-filter=AMRTU"]
-               ref1 (conj ref1)
-               ref2 (conj ref2))
+  (let [args (into ["git" "diff" "--name-only" "--diff-filter=AMRTU"] extra-args)
         proc (apply process/start {:out :pipe, :err :pipe} args)
         exit @(jprocess/exit-ref proc)]
     (if (zero? exit)
       (string/split-lines (slurp (jprocess/stdout proc)))
       (throw (ex-info (slurp (jprocess/stderr proc)) {:status exit})))))
+
+(defn diff
+  [ref1 ref2]
+  (run-diff (cond-> []
+              ref1 (conj ref1)
+              ref2 (conj ref2))))
+
+(defn diff-cached
+  []
+  (run-diff ["--cached"]))
 
 (defn ls-files
   []

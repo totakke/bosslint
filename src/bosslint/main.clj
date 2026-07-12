@@ -42,9 +42,10 @@
 
 (defn enum-files [ref1 ref2]
   (let [top-dir (git/top-dir)]
-    (->> (if (= ref1 ":all")
-           (git/ls-files)
-           (git/diff ref1 ref2))
+    (->> (cond
+           (= ref1 ":all") (git/ls-files)
+           (= ref1 ":staged") (git/diff-cached)
+           :else (git/diff ref1 ref2))
          (map (fn [s]
                 {:git-path s
                  :absolute-path (str top-dir "/" s)})))))
@@ -76,7 +77,7 @@
                             (comp (set (:linter options)) name)
                             #(not (:disabled? (get conf (keyword (name %))))))
           linters (filter enabled-linter? (list-linters))
-          diff {:ref1 (when-not (= ref1 ":all") ref1)
+          diff {:ref1 (when-not (#{":all" ":staged"} ref1) ref1)
                 :ref2 ref2}
           statuses (atom #{})]
       (when linter/*verbose?*
