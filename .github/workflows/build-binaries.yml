@@ -15,16 +15,16 @@ jobs:
           - ubuntu-24.04-arm    # aarch64 (arm64)
     steps:
       - name: Checkout
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
         with:
           fetch-depth: 0
 
       - name: Setup GraalVM
         uses: graalvm/setup-graalvm@v1
         with:
-          java-version: '21'
+          java-version: '25'
           distribution: 'graalvm-community'
-          version: '22.3.0'
+          version: '25.1'
 
       - name: Setup Clojure
         uses: DeLaGuardo/setup-clojure@13
