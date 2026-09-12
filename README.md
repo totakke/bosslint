@@ -35,7 +35,7 @@ OS & arch:
 Download & install:
 
 ```sh
-curl -sSL https://github.com/totakke/bosslint/releases/download/v0.9.146/bosslint_[os]_[arch] -o bosslint
+curl -sSL https://github.com/totakke/bosslint/releases/download/v0.10.157/bosslint_[os]_[arch] -o bosslint
 chmod +x bosslint
 mv bosslint [/your/PATH/dir/]
 ```
