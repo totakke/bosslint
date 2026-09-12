@@ -2,7 +2,7 @@
 
 ## [Unreleased]
 
-## [0.10.157] - 2026-09-12
+## [0.10.159] - 2026-09-12
 
 ### Added
 
@@ -142,8 +142,8 @@
 
 First release.
 
-[Unreleased]: https://github.com/totakke/bosslint/compare/v0.10.157...HEAD
-[0.10.157]: https://github.com/totakke/bosslint/compare/v0.9.146...v0.10.157
+[Unreleased]: https://github.com/totakke/bosslint/compare/v0.10.159...HEAD
+[0.10.159]: https://github.com/totakke/bosslint/compare/v0.9.146...v0.10.159
 [0.9.146]: https://github.com/totakke/bosslint/compare/v0.8.137...v0.9.146
 [0.8.137]: https://github.com/totakke/bosslint/compare/v0.7.130...v0.8.137
 [0.7.130]: https://github.com/totakke/bosslint/compare/v0.6.120...v0.7.130
