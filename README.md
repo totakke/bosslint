@@ -95,6 +95,36 @@ themselves. You must install each linter preliminarily. Supported linters are
 shown by `bosslint linters` command or are found in
 [Supported linters](#supported-linters) section.
 
+### Git hooks
+
+Bosslint works well as a Git `pre-commit` hook. Create `.git/hooks/pre-commit`
+with the following script and make it executable with
+`chmod +x .git/hooks/pre-commit`.
+
+```sh
+#!/bin/sh
+
+exec bosslint check :staged
+```
+
+`bosslint check :staged` lints only the files staged in the Git index, so
+unstaged changes do not affect the result. The commit is aborted when the
+command exits with a non-zero status, i.e., when any linter reports errors or
+warnings. To allow warnings and abort only on errors, check the
+[exit code](#exit-codes) explicitly.
+
+```sh
+#!/bin/sh
+
+bosslint check :staged
+status=$?
+
+[ $status -eq 2 ] && exit 0
+exit $status
+```
+
+Use `git commit --no-verify` to skip the hook temporarily.
+
 ### Supported linters
 
 | Linter | Bosslint linter name | Target files |
