@@ -3,7 +3,7 @@
         io.aviso/pretty {:mvn/version "1.4.4"}
         org.clojure/clojure {:mvn/version "1.12.5"}
         org.clojure/tools.cli {:mvn/version "1.4.256"}
-        org.clojure/tools.deps {:mvn/version "0.31.1629"}
+        org.clojure/tools.deps.edn {:mvn/version "0.9.57"}
         org.slf4j/slf4j-simple {:mvn/version "2.0.18"}}
 
  :aliases {:build {:extra-deps {io.github.clojure/tools.build
