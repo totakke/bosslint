@@ -2,6 +2,10 @@
 
 ## [Unreleased]
 
+### Changed
+
+- Use tools.deps.edn instead of tools.deps. [#11](https://github.com/totakke/bosslint/pull/11)
+
 ## [0.10.159] - 2026-09-12
 
 ### Added
