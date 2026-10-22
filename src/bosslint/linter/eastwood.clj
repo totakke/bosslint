@@ -4,7 +4,7 @@
             [bosslint.process :as process]
             [clojure.java.io :as io]
             [clojure.string :as string]
-            [clojure.tools.deps :as deps]
+            [clojure.tools.deps.edn :refer [read-deps]]
             [io.aviso.ansi :as ansi]))
 
 (def ^:private excludes
@@ -32,7 +32,7 @@
 
 (defn- aliases-with-extra-paths
   [dir]
-  (->> (deps/slurp-deps (io/file dir "deps.edn"))
+  (->> (read-deps (io/file dir "deps.edn"))
        :aliases
        (filter #(contains? (second %) :extra-paths))
        keys
