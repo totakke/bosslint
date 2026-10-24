@@ -2,6 +2,10 @@
 
 ## [Unreleased]
 
+### Added
+
+- Add Ruff linter. [#12](https://github.com/totakke/bosslint/pull/12)
+
 ### Changed
 
 - Use tools.deps.edn instead of tools.deps. [#11](https://github.com/totakke/bosslint/pull/11)
