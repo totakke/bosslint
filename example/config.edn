@@ -61,6 +61,10 @@
  {:disabled? false
   :command-options ["-c" "/path/to/markdownlint.yaml"]}
 
+ :ruff
+ {:disabled? false
+  :command-options ["--select" "E,F"]}
+
  :shellcheck
  {:disabled? false}
 

@@ -18,6 +18,7 @@
                              jsonlint
                              kubeval
                              markdownlint
+                             ruff
                              shellcheck
                              sql-lint
                              stylelint
