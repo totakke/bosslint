@@ -32,10 +32,12 @@
    #"(^|/)Dockerfile(\.[-\w]+)?$" :docker
    #"(^|/)(docker-)?compose(\.[-\w]+)?\.ya?ml$" :docker-compose
    #"(^|/)\.env$" :dot-env
+   #"\.ipynb$" :jupyter
    #"\.java$" :java
    #"\.json$" :json
    #"\.(md|markdown)$" :markdown
    #"\.py$" :python
+   #"\.pyi$" :python-stub
    #"\.s[ac]ss$" :sass
    #"\.sh$" :shell
    #"\.sql$" :sql

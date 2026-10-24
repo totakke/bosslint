@@ -6,7 +6,7 @@
   (name [] "Ruff")
 
   (files [file-group _]
-    (linter/select-files file-group [:python]))
+    (linter/select-files file-group [:python :python-stub :jupyter]))
 
   (lint [{:keys [files]} conf]
     (when (linter/check-command "ruff")

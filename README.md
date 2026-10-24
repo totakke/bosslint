@@ -145,7 +145,7 @@ Use `git commit --no-verify` to skip the hook temporarily.
 | [jsonlint](https://github.com/zaach/jsonlint) | `jsonlint` | `**/*.json` |
 | [kubeval](https://www.kubeval.com/) | `kubeval` | `**/*.{yaml,yml}` |
 | [markdownlint-cli](https://github.com/igorshubovych/markdownlint-cli) | `markdownlint` | `**/*.{markdown,md}` |
-| [Ruff](https://docs.astral.sh/ruff/) | `ruff` | `**/*.py` |
+| [Ruff](https://docs.astral.sh/ruff/) | `ruff` | `**/*.{ipynb,py,pyi}` |
 | [ShellCheck](https://www.shellcheck.net/) | `shellcheck` | `**/*.sh` |
 | [sql-lint](https://github.com/joereynolds/sql-lint) | `sql-lint` | `**/*.sql` |
 | [stylelint](https://stylelint.io/) | `stylelint` | `**/*.{css,sass,scss}` |

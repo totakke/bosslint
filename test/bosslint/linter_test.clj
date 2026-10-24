@@ -21,9 +21,11 @@
     "foo.env"                   #{:other}
     "path/to/foo.env"           #{:other}
 
+    "path/to/foo.ipynb"         #{:jupyter}
     "path/to/foo.java"          #{:java}
     "path/to/README.md"         #{:markdown}
     "path/to/foo.py"            #{:python}
+    "path/to/foo.pyi"           #{:python-stub}
     "path/to/foo.sass"          #{:sass}
     "path/to/foo.scss"          #{:sass}
     "path/to/foo.sh"            #{:shell}
